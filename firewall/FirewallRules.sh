@@ -33,6 +33,7 @@ ufw allow in 'Nginx Full'
 
 ### FTP
 #ufw allow in 2121/tcp
+ufw allow in 48000:49000/tcp
 
 ##############################
 ##           MAIL           ##
