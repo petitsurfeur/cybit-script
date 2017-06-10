@@ -3,6 +3,9 @@
 echo "Installation de UFW"
 apt install ufw
 
+echo "Remplacement du fichier 
+cp ./before.rules /etc/ufw/
+
 echo "Copie du fichier contenant les règles"
 cp ./Firewall.sh /etc/init.d/
 chmod +x /etc/init.d/Firewall.sh
