@@ -1,0 +1,88 @@
+# Firewall Rules by Cybitnap
+# Last Update : 2017-05-15
+
+### Suppression de toutes les regles existantes
+for j in $(for i in $(sudo ufw status numbered | (grep -E '[0-9]+/(tc|ud)p' |awk -F"[][]" '{print $2}') ) ; do echo $i ; done | tac) ; do sudo ufw --force delete $j ; done
+
+#ufw --force reset
+ufw default deny incoming
+ufw default deny outgoing
+
+### SSH
+ufw allow in 2022/tcp
+ufw allow out 22,2022/tcp
+#ufw allow in 22/tcp
+
+### DNS (port 53)
+ufw allow out domain/udp
+
+### NTP (port 123)
+ufw allow out ntp/udp
+
+### WHOIS (port 43)
+ufw allow out whois/tcp
+
+
+##############################
+##            WEB           ##
+##############################
+
+### HTTP / HTTPS
+ufw allow out 'Nginx Full'
+ufw allow in 'Nginx Full'
+
+### FTP
+#ufw allow in 2121/tcp
+
+##############################
+##           MAIL           ##
+##############################
+
+ufw allow out smtp/tcp
+
+
+##############################
+##          AUTRES          ##
+##############################
+
+### Monip
+#ufw allow in 1337/tcp
+
+### Webmin
+#ufw allow in 10022/tcp
+
+### Autoriser IP specifique
+# ufw allow from 192.168.50.12
+
+### Autoriser IP specifique sur port specifique
+#ufw allow from 192.168.50.12 to any port 22 proto tcp
+
+### SQUID
+#ufw allow in 8888/tcp
+
+### OpenVPN
+#ufw allow in openvpn/tcp
+
+### rTorrent / ruTorrent
+#ufw allow out 53/tcp
+#ufw allow out 80/udp
+#ufw allow out 80,1337,2710,3310,6969/udp
+#ufw allow out 80,1337,2710,3310,6969/tcp
+#ufw allow in 55980:55990/tcp
+#ufw allow in 55980:55990/udp
+#ufw allow 6880:6999/tcp
+#ufw allow 6880:6999/udp
+
+### Netdata
+#ufw allow in 19999/tcp
+
+### iPerf
+ufw allow out 5001/tcp
+ufw allow in 5001/tcp
+
+##### FIN #####
+
+#ufw deny in to any
+ufw disable && ufw --force enable
+ufw status verbose
+
