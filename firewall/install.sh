@@ -23,3 +23,6 @@ EOF
 
 echo "Redémarrage de Rsyslog"
 systemctl restart rsyslog.service
+
+echo "Mettre en place la rotation des logs"
+cp firewall /etc/logrotate/
