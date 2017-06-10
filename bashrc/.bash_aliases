@@ -44,6 +44,6 @@ if [ -x /usr/bin/dircolors ]; then
 
 # Nouveaux alias
 alias ls='ls --color=auto'
-alias ll='ls -alF'
+alias ll='ls -alFh'
 
 fi
