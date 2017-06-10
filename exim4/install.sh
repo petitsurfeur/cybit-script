@@ -9,3 +9,7 @@ fi
 cp update-exim4.conf.conf /etc/exim4/
 
 echo rhea.cybtech.net > /etc/mailname
+
+service exim4 restart
+
+echo "Ceci est un mail de test." | mail -s Test_Envoi_Mail fremaud@numericable.com
