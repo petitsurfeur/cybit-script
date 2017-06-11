@@ -1,4 +1,4 @@
-cp .bash_aliases /root/ /home/cybitnap/
+cp .bash_aliases /root/ && cp .bash_aliases /home/cybitnap/
 
 cat << 'EOF' >> /root/.bashrc
 if [ -f ~/.bash_aliases ]; then
