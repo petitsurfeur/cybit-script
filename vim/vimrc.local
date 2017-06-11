@@ -1,7 +1,7 @@
 " Fichier /etc/vim/vimrc.local
 
+syntax on           " Active la coloration syntaxique
 "set number              " Affiche les numeros de lignes
-set syntax=on           " Active la coloration syntaxique
 set history=100          " Definit le nombre de commandes enregistres dans l'historique
 set hlsearch            " Met en surbrillance les phrases recherches
 set ic                  " Recherche en ignorant la casse
