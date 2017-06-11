@@ -19,5 +19,5 @@ sed -i -e 's/^#*action =.*/action = %(action_mwl)s/' '/etc/fail2ban/jail.conf'
 sed -i -e 's/^#*port = ssh/port = 22,2022/' '/etc/fail2ban/jail.conf'
 
 
-echo " Copie des fichiers dans /
+echo " Copie des fichiers dans /"
 echo "Configuration de jail.local"
