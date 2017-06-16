@@ -14,7 +14,7 @@ sed -i -e 's/^#*PermitRootLogin.*/PermitRootLogin no/' '/etc/ssh/sshd_config'
 sed -i '/PermitRootLogin no/a\AllowUsers' '/etc/ssh/sshd_config'
 sed 's/^#*MaxStartups.*$/MaxStartups 3:50:10/g' /'etc/ssh/sshd_config'
 
-#service sshd restart
+service sshd restart
 
 echo ""
 echo "Penser a ajouter AllowUsers"
