@@ -32,11 +32,11 @@ sudo apt dist-upgrade
 echo
 
 echo -e "step 6: ${GREEN}supprime les paquetages inutiles (autoremove)${NOCOLOR}"
-sudo apt --purge autoremove --yes
+sudo apt-get --purge autoremove --yes
 
 echo
 
 echo -e "step 7: ${GREEN}nettoie (autoclean)${NOCOLOR}"
-sudo apt autoclean
+sudo apt-get autoclean
 
 echo
