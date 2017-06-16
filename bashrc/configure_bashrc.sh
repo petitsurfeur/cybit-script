@@ -1,3 +1,6 @@
+#!/bin/bash
+set -e
+
 cp .bash_aliases /root/ && cp .bash_aliases /home/cybitnap/
 
 cat << 'EOF' >> /root/.bashrc
