@@ -39,7 +39,10 @@ sudo apt -y install hardinfo hwinfo htop sysv-rc-conf  locate         # Displays
 sudo apt -y install curl sudo iperf                           # Command line tool for transferring data with URL syntax
 
 # Création de l'utilisateur
-adduser cybitnap
+if [ ! -f /home/cybitnap/ ]; then
+ adduser cybitnap
+fi
+
 usermod -a -G adm,sudo,www-data cybitnap
 
 echo ""
