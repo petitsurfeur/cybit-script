@@ -4,13 +4,13 @@ set -e
 # #################################################################
 #
 # Written to be used on 64 bits computers
-# Author            : Erik Dubois
-# Website           : http://www.erikdubois.be
+# Author            : Petitsurfeur
+# Website           : http://
 #
-# Modified by       : TheGreatYellow67 (TgY67)
+# Modified by       : 
 # Version           : v1
-# Start date        : 09/02/2017
-# Last modified date: 06/05/2017
+# Start date        : 16/06/2017
+# Last modified date: 16/06/2017
 #
 # #################################################################
 
