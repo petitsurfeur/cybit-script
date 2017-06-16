@@ -21,26 +21,26 @@ set -e
 ###################################################################
 
 # Mise-à-jour du Système
-#su -
-#apt -y install sudo                          #
-#usermod -a -G adm,sudo,www-data cybitnap
-#exit
 
+apt -y install sudo                          #
 sudo apt update -y
 sudo apt upgrade -y
 
 # Installation of zippers and unzippers
 
-sudo apt-get -y install rar unrar-free unzip zip                             # Archiver for .rar files
+sudo apt -y install unrar-free unzip zip                             # Archiver for .rar files
 
 # System utilities and various tools
 
-sudo apt-get -y install hardinfo hwinfo htop sysv-rc-conf dns-utils locate         # Displays system information
+sudo apt -y install hardinfo hwinfo htop sysv-rc-conf  locate         # Displays system information
 
 # Core tools
 
-sudo apt-get -y install curl                            # Command line tool for transferring data with URL syntax
+sudo apt -y install curl sudo iperf                           # Command line tool for transferring data with URL syntax
 
+# Création de l'utilisateur
+adduser cybitnap
+usermod -a -G adm,sudo,www-data cybitnap
 
 echo ""
 echo "################################################################"
