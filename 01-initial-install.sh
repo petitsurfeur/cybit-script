@@ -26,24 +26,16 @@ set -e
 #usermod -a -G adm,sudo,www-data cybitnap
 #exit
 
-#sudo apt update -y
-#sudo apt upgrade -y
+sudo apt update -y
+sudo apt upgrade -y
 
 # Installation of zippers and unzippers
 
-sudo apt-get -y install rar                             # Archiver for .rar files
-sudo apt-get -y install unrar-free                      # Unarchiver for .rar files
-sudo apt-get -y install unzip                           # De-archiver for .zip files
-sudo apt-get -y install zip                             # Archiver for .zip files
+sudo apt-get -y install rar unrar-free unzip zip                             # Archiver for .rar files
 
 # System utilities and various tools
 
-sudo apt-get -y install hardinfo                        # Displays system information
-sudo apt-get -y install htop                            # Interactive processes viewer
-sudo apt-get -y install hwinfo                          # Hardware identification system
-sudo apt-get -y install sysv-rc-conf                    # SysV init runlevel configuration tool for the terminal
-sudo apt-get -y install dns-utils                       # 
-sudo apt-get -y install locate                          # 
+sudo apt-get -y install hardinfo hwinfo htop sysv-rc-conf dns-utils locate         # Displays system information
 
 # Core tools
 
