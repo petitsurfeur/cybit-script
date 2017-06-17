@@ -1,0 +1,50 @@
+[DEFAULT]
+bantime = 64800 ; 18 heures
+findtime = 6000 ; 100 minutes
+maxretry = 3
+
+[ssh]
+enabled  = true
+port     = 2022
+filter   = sshd
+maxretry = 3
+logpath = /var/log/auth.log
+
+[dropbear]
+enabled  = true
+port     = 2022
+filter   = dropbear
+logpath  = /var/log/auth.log
+maxretry = 3
+
+[ssh-ddos]
+enabled  = true
+port     = 2022
+filter   = sshd-ddos
+logpath  = /var/log/auth.log
+maxretry = 3
+ 
+[ddos]
+enabled = true
+action = iptables-allports
+protocol = udp
+filter = ddos
+logpath = /var/log/kern.log
+ 
+[portscan]
+enabled = true
+port = 21,22,23,25
+filter = portscan
+logpath = /var/log/kern.log
+ 
+[proxmox4]
+enabled = true
+port = https,http,8006
+filter = proxmox4
+logpath = /var/log/daemon.log
+ 
+[exim]
+enabled = true
+port = 25,587
+filter = exim
+logpath = /var/log/exim4/mainlog

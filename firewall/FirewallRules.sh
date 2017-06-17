@@ -28,8 +28,11 @@ ufw allow out whois/tcp
 ##############################
 
 ### HTTP / HTTPS
-ufw allow out 'Nginx Full'
-ufw allow in 'Nginx Full'
+ufw allow out 80,443/tcp
+ufw allow in 80,443/tcp
+
+### Proxmox
+ufw allow in 8006/tcp
 
 ### FTP
 #ufw allow in 2121/tcp
