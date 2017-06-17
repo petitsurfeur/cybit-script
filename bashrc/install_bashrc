@@ -1,0 +1,15 @@
+#!/bin/bash
+set -e
+
+echo ""
+echo "Copie de .bash_aliases" 
+cp .bash_aliases /root/ && cp .bash_aliases /home/cybitnap/
+
+cat << 'EOF' >> /root/.bashrc
+if [ -f ~/.bash_aliases ]; then
+    . ~/.bash_aliases
+fi
+EOF
+
+echo ""
+echo "Pour personnaliser le message d'accueil > http://patorjk.com/software/taag/#p=display&f=Colossal&t=Nom%20du%20Serveur "

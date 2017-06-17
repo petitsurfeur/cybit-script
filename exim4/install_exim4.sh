@@ -17,4 +17,4 @@ echo "Redémarrage d'Exim4"
 service exim4 restart
 
 echo "Envoi d'un mail de test"
-echo ""Ceci est un mail de test." | mail -s Test_Envoi_Mail mail@test.fr"
+echo "echo "Ceci est un mail de test." | mail -s Test_Envoi_Mail mail@test.fr"
