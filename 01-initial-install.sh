@@ -20,17 +20,20 @@ set -e
 #
 ###################################################################
 
-# Mise-à-jour du Système
+echo ""
+echo "### Mise-à-jour du Système"
 
 apt -y install sudo                          #
 sudo apt update -y
 sudo apt upgrade -y
 
-# Installation of zippers and unzippers
+echo ""
+echo "### Installation of zippers and unzippers"
 
 sudo apt -y install unrar-free unzip zip                             # Archiver for .rar files
 
-# System utilities and various tools
+echo ""
+echo "### System utilities and various tools"
 
 sudo apt -y install hardinfo hwinfo htop sysv-rc-conf  locate         # Displays system information
 
@@ -38,7 +41,8 @@ sudo apt -y install hardinfo hwinfo htop sysv-rc-conf  locate         # Displays
 
 sudo apt -y install curl sudo iperf                           # Command line tool for transferring data with URL syntax
 
-# Création de l'utilisateur
+echo ""
+echo "### Création de l'utilisateur"
 if [ ! -f /home/cybitnap/ ]; then
  adduser cybitnap
 fi

@@ -36,4 +36,17 @@ systemctl restart rsyslog.service
 
 echo ""
 echo "### Mise en place la rotation des logs"
-cp firewall /etc/logrotate.d/
+cat << 'EOF' > /etc/logrotate.d/ufw
+/var/log/ufw.log {
+        weekly
+        rotate 12
+        compress
+        delaycompress
+        missingok
+        notifempty
+        create 644 syslog adm
+}
+EOF
+
+echo ""
+echo "### Si hote Proxmox > Modifier DEFAULT_FORWARD_POLICY=ACCEPT dans /etc/default/ufw"

@@ -1,7 +1,7 @@
 # Firewall Rules by Cybitnap
 # Last Update : 2017-05-15
 
-### Suppression de toutes les regles existantes
+### Suppression de toutes les regles existantes pour reinitialisation
 for j in $(for i in $(sudo ufw status numbered | (grep -E '[0-9]+/(tc|ud)p' |awk -F"[][]" '{print $2}') ) ; do echo $i ; done | tac) ; do sudo ufw --force delete $j ; done
 
 #ufw --force reset
@@ -21,6 +21,13 @@ ufw allow out ntp/udp
 
 ### WHOIS (port 43)
 ufw allow out whois/tcp
+
+
+##############################
+##        VM / CT           ##
+##############################
+
+ufw allow in 2122/tcp
 
 
 ##############################
