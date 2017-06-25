@@ -1,4 +1,9 @@
 #!/bin/bash
+
+RED="\033[1;31m"
+GREEN="\033[1;32m"
+NOCOLOR="\033[0m"
+
 set -e
 #
 # #################################################################
@@ -21,19 +26,19 @@ set -e
 ###################################################################
 
 echo ""
-echo "### Mise-à-jour du Système"
+echo -e "${GREEN}### Mise-à-jour du Système${NOCOLOR}"
 
 apt -y install sudo                          #
 sudo apt update -y
 sudo apt upgrade -y
 
 echo ""
-echo "### Installation of zippers and unzippers"
+echo -e "${GREEN}### Installation of zippers and unzippers${NOCOLOR}"
 
 sudo apt -y install unrar-free unzip zip                             # Archiver for .rar files
 
 echo ""
-echo "### System utilities and various tools"
+echo -e "${GREEN}### System utilities and various tools${NOCOLOR}"
 
 sudo apt -y install hardinfo hwinfo htop sysv-rc-conf  locate         # Displays system information
 
@@ -42,7 +47,7 @@ sudo apt -y install hardinfo hwinfo htop sysv-rc-conf  locate         # Displays
 sudo apt -y install curl sudo iperf                           # Command line tool for transferring data with URL syntax
 
 echo ""
-echo "### Création de l'utilisateur"
+echo -e "${GREEN}### Création de l'utilisateur${NOCOLOR}"
 if [ ! -f /home/cybitnap/ ]; then
  adduser cybitnap
 fi
@@ -50,6 +55,6 @@ fi
 usermod -a -G adm,sudo,www-data cybitnap
 
 echo ""
-echo "################################################################"
+echo "${GREEN}################################################################"
 echo "# Core software installed                                      #"
-echo "################################################################"
+echo "################################################################${NOCOLOR}"

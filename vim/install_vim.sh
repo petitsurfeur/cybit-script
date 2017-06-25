@@ -1,13 +1,18 @@
 #!/bin/bash
+
+RED="\033[1;31m"
+GREEN="\033[1;32m"
+NOCOLOR="\033[0m"
+
 set -e
 
 # Install and configure vim
 #apt update
 
 echo ""
-echo "### Desinstallation de vim-tiny et installation de Vim"
+echo -e "${GREEN}### Desinstallation de vim-tiny et installation de Vim${NOCOLOR}"
 apt remove -y vim-tiny && apt install -y vim
 
 echo ""
-echo "### Copie du fichier de configuration"
+echo -e "${GREEN}### Copie du fichier de configuration${NOCOLOR}"
 cp vimrc.local /etc/vim/

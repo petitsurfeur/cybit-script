@@ -1,11 +1,16 @@
 #!/bin/bash
+
+RED="\033[1;31m"
+GREEN="\033[1;32m"
+NOCOLOR="\033[0m"
+
 set -e
 
-echo "### Installation de UFW"
+echo -e "${GREEN}### Installation de UFW${NOCOLOR}"
 apt install ufw
 
 echo ""
-echo "### Remplacement du fichier before.rules" 
+echo -e "${GREEN}### Remplacement du fichier before.rules${NOCOLOR}" 
 if [ ! -f /etc/ufw/before.rules.SAVE ]; then
  cp /etc/ufw/before.rules /etc/ufw/before.rules.SAVE
 fi
@@ -13,13 +18,13 @@ fi
 cp before.rules /etc/ufw/
 
 echo ""
-echo "### Copie du fichier contenant les règles"
+echo -e "${GREEN}### Copie du fichier contenant les règles${NOCOLOR}"
 cp FirewallRules.sh /etc/init.d/
 chmod +x /etc/init.d/FirewallRules.sh
 sh /etc/init.d/FirewallRules.sh
 
 echo ""
-echo "### Desactivation des logs UFW dans syslog et kern.log"
+echo -e "${GREEN}### Desactivation des logs UFW dans syslog et kern.log${NOCOLOR}"
 cat << 'EOF' > /etc/rsyslog.d/20-ufw.conf
 # Log kernel generated UFW log messages to file
 :msg,contains,"[UFW " /var/log/ufw.log
@@ -31,11 +36,11 @@ cat << 'EOF' > /etc/rsyslog.d/20-ufw.conf
 EOF
 
 echo ""
-echo "### Redémarrage de Rsyslog"
+echo -e "${GREEN}### Redémarrage de Rsyslog${NOCOLOR}"
 systemctl restart rsyslog.service
 
 echo ""
-echo "### Mise en place la rotation des logs"
+echo -e "${GREEN}### Mise en place la rotation des logs${NOCOLOR}"
 cat << 'EOF' > /etc/logrotate.d/ufw
 /var/log/ufw.log {
         weekly
@@ -49,4 +54,4 @@ cat << 'EOF' > /etc/logrotate.d/ufw
 EOF
 
 echo ""
-echo "### Si hote Proxmox > Modifier DEFAULT_FORWARD_POLICY=ACCEPT dans /etc/default/ufw"
+echo -e "${RED}### Si hote Proxmox > Modifier DEFAULT_FORWARD_POLICY=ACCEPT dans /etc/default/ufw${NOCOLOR}"
