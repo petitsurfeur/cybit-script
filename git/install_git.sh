@@ -19,4 +19,4 @@ git config --global color.branch auto
 echo ""
 echo -e "${RED}### Lancer les commandes suivantes :"
 echo " git config --global user.name [votre_pseudo]"
-echo " git config --global user.email [em@il.com]${NOCOLOR}"
+echo -e " git config --global user.email [em@il.com]${NOCOLOR}"

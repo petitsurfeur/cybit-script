@@ -48,13 +48,13 @@ sudo apt -y install curl sudo iperf                           # Command line too
 
 echo ""
 echo -e "${GREEN}### Création de l'utilisateur${NOCOLOR}"
-if [ ! -f /home/cybitnap/ ]; then
+if [ ! -d /home/cybitnap/ ]; then
  adduser cybitnap
 fi
 
 usermod -a -G adm,sudo,www-data cybitnap
 
 echo ""
-echo "${GREEN}################################################################"
-echo "# Core software installed                                      #"
-echo "################################################################${NOCOLOR}"
+echo -e "${GREEN}################################################################"
+echo "###           Core software installed                        ###"
+echo -e "################################################################${NOCOLOR}"

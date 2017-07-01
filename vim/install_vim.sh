@@ -15,4 +15,5 @@ apt remove -y vim-tiny && apt install -y vim
 
 echo ""
 echo -e "${GREEN}### Copie du fichier de configuration${NOCOLOR}"
+rm /etc/vim/vimrc.tiny
 cp vimrc.local /etc/vim/

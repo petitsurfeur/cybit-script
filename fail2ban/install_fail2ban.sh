@@ -18,7 +18,7 @@ fi
 
 sed -i -e 's/^#*ignoreip.*/ignoreip = 127.0.0.1\/8 XXX.cybtech.net/' '/etc/fail2ban/jail.conf'
 sed -i -e 's/^#*bantime  = 600/bantime = 864000/' '/etc/fail2ban/jail.conf'
-sed -i -e 's/^#*findtime =.*/findtime = 6000/' '/etc/fail2ban/jail.conf'
+sed -i -e 's/^#*findtime  =.*/findtime = 6000/' '/etc/fail2ban/jail.conf'
 sed -i -e 's/^#*maxretry =.*/maxretry = 3/' '/etc/fail2ban/jail.conf'
 sed -i -e 's/^#*destemail =.*/destemail = XXX@cybtech.net/' '/etc/fail2ban/jail.conf'
 sed -i -e 's/^#*sendername =.*/sendername = Fail2Ban - XXX/' '/etc/fail2ban/jail.conf'

@@ -9,19 +9,18 @@ set -e
 echo -e "${GREEN}### Installation de UFW${NOCOLOR}"
 apt install ufw
 
-echo ""
-echo -e "${GREEN}### Remplacement du fichier before.rules${NOCOLOR}" 
-if [ ! -f /etc/ufw/before.rules.SAVE ]; then
- cp /etc/ufw/before.rules /etc/ufw/before.rules.SAVE
-fi
-
-cp before.rules /etc/ufw/
+#echo ""
+#echo -e "${GREEN}### Remplacement du fichier before.rules${NOCOLOR}" 
+#if [ ! -f /etc/ufw/before.rules.SAVE ]; then
+# cp /etc/ufw/before.rules /etc/ufw/before.rules.SAVE
+#fi
+#cp before.rules /etc/ufw/
 
 echo ""
 echo -e "${GREEN}### Copie du fichier contenant les règles${NOCOLOR}"
-cp FirewallRules.sh /etc/init.d/
-chmod +x /etc/init.d/FirewallRules.sh
-sh /etc/init.d/FirewallRules.sh
+cp FirewallRules /etc/init.d/
+chmod +x /etc/init.d/FirewallRules
+sh /etc/init.d/FirewallRules
 
 echo ""
 echo -e "${GREEN}### Desactivation des logs UFW dans syslog et kern.log${NOCOLOR}"

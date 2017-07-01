@@ -9,7 +9,7 @@ set -e
 echo ""
 echo -e "${GREEN}### Installation de Openssh-server${NOCOLOR}"
 #apt update
-apt install openssh-server
+apt install -y openssh-server
 
 if [ ! -f /etc/ssh/sshd_config.SAVE ]; then
  cp /etc/ssh/sshd_config /etc/ssh/sshd_config.SAVE
