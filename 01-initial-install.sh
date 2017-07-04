@@ -40,19 +40,20 @@ sudo apt -y install unrar-free unzip zip                             # Archiver 
 echo ""
 echo -e "${GREEN}### System utilities and various tools${NOCOLOR}"
 
-sudo apt -y install hardinfo hwinfo htop sysv-rc-conf  locate         # Displays system information
+sudo apt -y install hardinfo hwinfo htop sysv-rc-conf locate         # Displays system information
 
 # Core tools
 
-sudo apt -y install curl sudo iperf                           # Command line tool for transferring data with URL syntax
+sudo apt -y install curl iperf                           # Command line tool for transferring data with URL syntax
 
 echo ""
 echo -e "${GREEN}### Création de l'utilisateur${NOCOLOR}"
-if [ ! -d /home/cybitnap/ ]; then
- adduser cybitnap
+read -p "Utilisateur a creer : " login
+  if [ ! -d /home/$login/ ]; then
+    adduser $login
+    usermod -a -G adm,sudo,www-data $login
+  else echo -e "L'utilisateur $login existe deja"
 fi
-
-usermod -a -G adm,sudo,www-data cybitnap
 
 echo ""
 echo -e "${GREEN}################################################################"
