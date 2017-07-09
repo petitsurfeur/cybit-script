@@ -33,21 +33,31 @@ read -p "S'agit-il d'un serveur Proxmox (desactiver l'apt source pve-enterprise.
     mv /etc/apt/sources.list.d/pve-enterprise.list /etc/apt/sources.list.d/pve-enterprise.list.bak
   fi
   
-ActualFullHostname=$(hostname -f)
-IpAddr=$(hostname -i)
-ActualServerName=$(hostname -s)
+read -p "Voulez-vous configurer le hostname et ajouter un utilisateur [O/n] ? " hostname_conf
+if [[ "$hostname_conf" = 'O' ]]; then
+  ActualFullHostname=$(hostname -f)
+  IpAddr=$(hostname -i)
+  ActualServerName=$(hostname -s)
 
-read -p "Nom du serveur (ex: tatooine) : " server_name
-read -p "Nom de domaine utilise (ex: dns.net) : " dns
-read -p "DNS complet (ex: tatooine.dns.net) : " fqdn
-read -p "Utilisateur a creer : " login
+  read -p "Nom du serveur (ex: tatooine) : " server_name
+  read -p "Nom de domaine utilise (ex: dns.net) : " dns
+  read -p "DNS complet (ex: tatooine.dns.net) : " fqdn
+  read -p "Utilisateur a creer : " login
 
-echo $fqdn > /etc/hostname
-echo $dns > /etc/mailname
+  echo $fqdn > /etc/hostname
+  echo $dns > /etc/mailname
 
-sed -i -e 's/'"$ActualFullHostname"'/'"$fqdn"'/' '/etc/hosts'
-sed -i -e 's/'"$ActualServerName"'/'"$server_name"'/' '/etc/hosts'
+  sed -i -e 's/'"$ActualFullHostname"'/'"$fqdn"'/' '/etc/hosts'
+  sed -i -e 's/'"$ActualServerName"'/'"$server_name"'/' '/etc/hosts'
 
+  echo ""
+  echo -e "${GREEN}### Création de l'utilisateur${NOCOLOR}"
+    if [ ! -d /home/$login/ ]; then
+          adduser $login
+  	  else echo -e "L'utilisateur $login existe deja"
+    fi
+    usermod -a -G adm,sudo,www-data $login
+fi
 
 read -p "Voulez-vous lancer la mise-a-jour du systeme [O/n] ? " update_choice
 if [[ "$update_choice" = 'O' ]]; then
@@ -55,26 +65,20 @@ if [[ "$update_choice" = 'O' ]]; then
   sudo apt update -y
   sudo apt upgrade -y
 fi
-sleep 8
+sleep 5
 
 echo ""
 echo -e "${GREEN}### Installation des paquets necessaires${NOCOLOR}"
 
 sudo apt -y install unrar-free unzip zip hardinfo hwinfo htop sysv-rc-conf locate git curl iperf                 
-sleep 8
+sleep 5
 
 echo ""
-echo -e "${GREEN}### Création de l'utilisateur${NOCOLOR}"
-  if [ ! -d /home/$login/ ]; then
-    adduser $login
-  else echo -e "L'utilisateur $login existe deja"
-fi
-    usermod -a -G adm,sudo,www-data $login
-echo ""
 echo -e "${GREEN}################################################################"
-echo "###           Core software installed                        ###"
+echo "###           Pre-requis installes                          ###"
 echo -e "################################################################${NOCOLOR}"
 echo ""
+sleep 5
 
 echo ""
 echo -e "${GREEN}### Configuration de GIT avec des couleurs${NOCOLOR}"
