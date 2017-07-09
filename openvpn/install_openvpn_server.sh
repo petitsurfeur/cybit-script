@@ -12,7 +12,7 @@ read -p "Voulez-vous installer les packages [O/n] ? " openvpn_install
   if [[ "$openvpn_install" = 'O' ]]; then
     wget -O - https://swupdate.openvpn.net/repos/repo-public.gpg|apt-key add -
     echo "deb http://build.openvpn.net/debian/openvpn/release/2.4 stretch main" > /etc/apt/sources.list.d/openvpn-aptrepo.list
-    apt update && apt install openvpn easy-rsa
+    apt update && apt install -y openvpn easy-rsa
 
 echo ""
 echo -e "${GREEN}### Creation du dossier /etc/openvpn/keys${NOCOLOR}" 
@@ -92,6 +92,6 @@ read -p "Voulez-vous creer les cles pour les Clients [O/n] ? " openvpn_clientKey
     read -p "Nom du Client N.1 : " client1
     cd /etc/openvpn/easy-rsa
     ./build-key $client1
-    cd /etc/openvpn/client-configs && ./make_config $client1
+    cd /etc/openvpn/client-configs & ./make_config $client1
   fi
 
