@@ -22,3 +22,13 @@ if [ ! -f /etc/cron.d/update ]; then
 EOF
 fi
 
+echo ""
+echo -e "${GREEN}### Copie du fichier resolv.conf${NOCOLOR}"
+cat << 'EOF' > /etc/resolv.conf
+nameserver 127.0.0.1
+nameserver 185.121.177.177
+nameserver 169.237.202.202
+EOF
+
+
+

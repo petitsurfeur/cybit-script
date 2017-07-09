@@ -23,4 +23,6 @@ service exim4 restart
 
 echo -e "${GREEN}### Envoi d'un mail de test${NOCOLOR}"
 echo "Ceci est un mail de test." | mail -s Test_Envoi_Mail_$dns $test_email
-tail -f /var/log/exim4/mainlog
+sleep 10
+cat /var/log/exim4/mainlog
+sleep 20

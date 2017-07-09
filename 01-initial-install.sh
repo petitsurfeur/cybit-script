@@ -28,7 +28,7 @@ set -e
 echo ""
 echo -e "${GREEN}### Mise-à-jour du Système${NOCOLOR}"
 
-read -p "S'agit-il d'un serveur Proxmox (desactiver l'apt source pve-enterprise.list) [O-n) ? " proxmox_choice
+read -p "S'agit-il d'un serveur Proxmox (desactiver l'apt source pve-enterprise.list) [O/n) ? " proxmox_choice
   if [[ "$proxmox_choice" = 'O' ]] && [ -f /etc/apt/sources.list.d/pve-enterprise.list ]; then
     mv /etc/apt/sources.list.d/pve-enterprise.list /etc/apt/sources.list.d/pve-enterprise.list.bak
   fi
@@ -89,53 +89,49 @@ read -p "Utilisateur Git : " git_user
 read -p "Email pour Git : " git_email
 git config --global user.name $git_user
 git config --global user.mail $git_email
-cd /opt/
-  if [ ! -d /opt/Git_Repos/cybit-script ]; then
-    mkdir -p /opt/Git_Repos/
-    git clone https://github.com/petitsurfeur/cybit-script.git
-  else echo -e "Le dossier /opt/Git_Repos/cybit_script/ existe deja"
-  fi
+
+# git clone https://github.com/petitsurfeur/cybit-script.git
 
 cd /opt/Git_Repos/cybit-script/update/ && ./install_update.sh
 
 echo -e "${GREEN}### Installation et configuration des outils tiers${NOCOLOR}"
 
-read -p "Voulez-vous installer Vim [O-n) ? " vim_choice
+read -p "Voulez-vous installer Vim [O/n] ? " vim_choice
   if [[ "$vim_choice" = 'O' ]]; then
         cd /opt/Git_Repos/cybit-script/vim/ && ./install_vim.sh
           fi
 
-read -p "Voulez-vous installer SSH [O-n) ? " ssh_choice
+read -p "Voulez-vous installer SSH [O/n] ? " ssh_choice
   if [[ "$ssh_choice" = 'O' ]]; then
         cd /opt/Git_Repos/cybit-script/ssh/ && ./install_ssh.sh
 	  fi
 
-read -p "Voulez-vous installer .bashrc [O-n) ? " bashrc_choice
+read -p "Voulez-vous installer .bashrc [O/n] ? " bashrc_choice
   if [[ "$bashrc_choice" = 'O' ]]; then
         cd /opt/Git_Repos/cybit-script/bashrc && ./install_bashrc.sh
 	  fi
 
-read -p "Voulez-vous installer Exim4 [O-n) ? " exim4_choice
+read -p "Voulez-vous installer Exim4 [O/n] ? " exim4_choice
   if [[ "$exim4_choice" = 'O' ]]; then
         cd /opt/Git_Repos/cybit-script/exim4 && ./install_exim4.sh
 	  fi
 
-read -p "Voulez-vous installer Apticron [O-n) ? " apticron_choice
+read -p "Voulez-vous installer Apticron [O/n] ? " apticron_choice
   if [[ "$apticron_choice" = 'O' ]]; then
         cd /opt/Git_Repos/cybit-script/apticron && ./install_apticron.sh
 	  fi
 
-read -p "Voulez-vous installer Fail2ban [O-n) ? " fail2ban_choice
+read -p "Voulez-vous installer Fail2ban [O/n] ? " fail2ban_choice
   if [[ "$fail2ban_choice" = 'O' ]]; then
          cd /opt/Git_Repos/cybit-script/fail2ban && ./install_fail2ban.sh
            fi
 
-read -p "Voulez-vous installer  UFW [O-n) ? " ufw_choice
+read -p "Voulez-vous installer  UFW [O/n] ? " ufw_choice
   if [[ "$ufw_choice" = 'O' ]]; then
          cd /opt/Git_Repos/cybit-script/firewall && ./install_firewall.sh
            fi
 
-read -p "Voulez-vous installer OpenVPN [O-n) ? " openvpn_choice
+read -p "Voulez-vous installer OpenVPN [O/n] ? " openvpn_choice
   if [[ "$openvpn_choice" = 'O' ]]; then
          cd /opt/Git_Repos/cybit-script/openvpn && ./install_openvpn_server.sh
            fi

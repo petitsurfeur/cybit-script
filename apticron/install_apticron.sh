@@ -33,5 +33,5 @@ cat << 'EOF' > /etc/cron.d/apticron
 EOF
 
 echo ""
-echo -e " ${green}### Execution d'Apticron et envoi d'un mail{$NOCOLOR}"
+echo -e " ${green}### Execution d'Apticron et envoi d'un mail${NOCOLOR}"
 apticron
