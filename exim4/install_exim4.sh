@@ -22,6 +22,7 @@ echo -e "${GREEN}### Redémarrage d'Exim4${NOCOLOR}"
 service exim4 restart
 
 echo -e "${GREEN}### Envoi d'un mail de test${NOCOLOR}"
+echo -e "${RED}### ATTENDRE 20 sec${NOCOLOR}"
 echo "Ceci est un mail de test." | mail -s Test_Envoi_Mail_$dns $test_email
 sleep 10
 cat /var/log/exim4/mainlog
