@@ -39,10 +39,15 @@ read -p "Voulez-vous creer les cles pour le serveur [O/n] ? " openvpn_serverKeys
     cd /etc/openvpn/easy-rsa
     source vars
     ./clean-all
+    sleep 5
     ./build-ca
+    sleep 5
     ./build-key-server server
+    sleep 5
     openssl dhparam 4096 > /etc/openvpn/easy-rsa/keys/dh4096.pem
+    sleep 5
     openvpn --genkey --secret /etc/openvpn/easy-rsa/keys/ta.key
+    sleep 5
     cd /etc/openvpn/easy-rsa/keys
     cp ca.crt ca.key server.crt server.key ta.key dh4096.pem /etc/openvpn/server
 
