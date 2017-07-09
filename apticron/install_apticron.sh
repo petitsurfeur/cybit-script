@@ -8,6 +8,10 @@ set -e
 
 echo ""
 echo -e " ${GREEN}### Installation d'Apticron${NOCOLOR}"
+
+read -p "Email du destinataire (admin) : " dest_email
+read -p "Email de l'expediteur : " sender_email
+
 apt install apticron --yes
 
 if [ ! -f /etc/apticron/apticron.conf.SAVE ]; then
@@ -15,10 +19,10 @@ if [ ! -f /etc/apticron/apticron.conf.SAVE ]; then
 fi
 
 echo ""
-echo -e  ${GREEN}"### Parametrage du fichier de Conf${NOCOLOR}"
-sed -i -e 's/^#*EMAIL=.*/EMAIL="admin@cybtech.net"/' '/etc/apticron/apticron.conf'
+echo -e " ${GREEN}### Parametrage du fichier de Conf${NOCOLOR}"
+sed -i -e 's/^#*EMAIL=.*/EMAIL="'"$dest_email"'"/' '/etc/apticron/apticron.conf'
 sed -i -e 's/^# NOTIFY_NO_UPDATES="0"/NOTIFY_NO_UPDATES="1"/' '/etc/apticron/apticron.conf'
-sed -i -e 's/^# CUSTOM_FROM=""/CUSTOM_FROM="rhea@cybtech.net"/' '/etc/apticron/apticron.conf'
+sed -i -e 's/^# CUSTOM_FROM=""/CUSTOM_FROM="'"$sender_email"'"/' '/etc/apticron/apticron.conf'
 
 echo ""
 echo -e " ${GREEN}### Modification du Cron dans /etc/cron.d/apticron${NOCOLOR}"
@@ -28,3 +32,6 @@ cat << 'EOF' > /etc/cron.d/apticron
 39 17 * * * root if test -x /usr/sbin/apticron; then /usr/sbin/apticron --cron; else true; fi
 EOF
 
+echo ""
+echo -e " ${green}### Execution d'Apticron et envoi d'un mail{$NOCOLOR}"
+apticron

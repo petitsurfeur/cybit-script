@@ -6,6 +6,11 @@ NOCOLOR="\033[0m"
 
 set -e
 
+read -p "Email du destinataire (admin) : " dest_email
+read -p "Email de l'expediteur : " sender_email
+read -p "Machines a Whitelister : " whitelist
+
+
 echo ""
 echo -e "${GREEN}### Installation de Fail2ban${NOCOLOR}"
 apt install -y fail2ban
@@ -16,13 +21,17 @@ if [ ! -f /etc/fail2ban/jail.conf.SAVE ]; then
  cp /etc/fail2ban/jail.conf /etc/fail2ban/jail.conf.SAVE
 fi
 
-sed -i -e 's/^#*ignoreip.*/ignoreip = 127.0.0.1\/8 XXX.cybtech.net/' '/etc/fail2ban/jail.conf'
+if [ -f /etc/fail2ban/jail.d/defaults-debian.conf ]; then
+ mv /etc/fail2ban/jail.d/defaults-debian.conf /etc/fail2ban/jail.d/defaults-debian.conf.SAVE
+fi
+
+sed -i -e 's/^#*ignoreip.*/ignoreip = 127.0.0.1\/8 '"$whitelist"' /' '/etc/fail2ban/jail.conf'
 sed -i -e 's/^#*bantime  = 600/bantime = 864000/' '/etc/fail2ban/jail.conf'
 sed -i -e 's/^#*findtime  =.*/findtime = 6000/' '/etc/fail2ban/jail.conf'
 sed -i -e 's/^#*maxretry =.*/maxretry = 3/' '/etc/fail2ban/jail.conf'
-sed -i -e 's/^#*destemail =.*/destemail = XXX@cybtech.net/' '/etc/fail2ban/jail.conf'
-sed -i -e 's/^#*sendername =.*/sendername = Fail2Ban - XXX/' '/etc/fail2ban/jail.conf'
-sed -i -e 's/^#*sender =.*/sender = XXX@cybtech.net/' '/etc/fail2ban/jail.conf'
+sed -i -e 's/^#*destemail =.*/destemail = '"$dest_email"' /' '/etc/fail2ban/jail.conf'
+sed -i -e 's/^#*sendername =.*/sendername = Fail2Ban - '"$(hostname -s)"' /' '/etc/fail2ban/jail.conf'
+sed -i -e 's/^#*sender =.*/sender = '"$sender_email"' /' '/etc/fail2ban/jail.conf'
 sed -i -e 's/^#*action = %(action_)s/action = %(action_mwl)s/' '/etc/fail2ban/jail.conf'
 
 echo ""

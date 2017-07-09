@@ -15,5 +15,12 @@ apt remove -y vim-tiny && apt install -y vim
 
 echo ""
 echo -e "${GREEN}### Copie du fichier de configuration${NOCOLOR}"
-rm /etc/vim/vimrc.tiny
-cp vimrc.local /etc/vim/
+  if [ -f /etc/vim/vimrc.tiny ]; then
+    rm /etc/vim/vimrc.tiny
+  else echo -e "Fichier vimrc.tiny absent"
+  fi
+    cp vimrc.local /etc/vim/
+
+echo ""
+echo -e "${GREEN}### Modification du fichier /usr/share/vim/vim80/defaults.vim${NOCOLOR}"
+mv /usr/share/vim/vim80/defaults.vim /usr/share/vim/vim80/defaults.vim.SAVE && cp defaults.vim /usr/share/vim/vim80/

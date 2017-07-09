@@ -52,5 +52,12 @@ cat << 'EOF' > /etc/logrotate.d/ufw
 }
 EOF
 
+read -p "S'agit-il d'un serveur Proxmox (Modifier DEFAULT_FORWARD_POLICY=ACCEPT dans /etc/default/ufw) [O-n) ? " proxmox_choice
+  if [[ "$proxmox_choice" = 'O' ]]; then
+        cp /etc/default/ufw /etc/default/ufw.SAVE
+	sed -i -e 's/^DEFAULT_FORWARD_POLICY="DROP"/DEFAULT_FORWARD_POLICY="ACCEPT"/' '/etc/default/ufw'
+	  fi
+
 echo ""
-echo -e "${RED}### Si hote Proxmox > Modifier DEFAULT_FORWARD_POLICY=ACCEPT dans /etc/default/ufw${NOCOLOR}"
+echo -e "${GREEN}### Redémarrage de Rsyslog et UFW${NOCOLOR}"
+systemctl restart rsyslog.service ufw
