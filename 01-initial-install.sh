@@ -77,16 +77,17 @@ sleep 2
 
 echo ""
 echo -e "${GREEN}### Installation des paquets utiles${NOCOLOR}"
-  packages = unrar-free unzip hardinfo hwinfo htop sysv-rc-conf locate git curl
-  echo -e "Les paquets utiles sont : " $packages
+  packages='unrar-free unzip hardinfo hwinfo htop sysv-rc-conf locate git curl'
+  echo -e "Les paquets utiles sont :  $packages"
   read -p "Voulez-vous installer les paquets utiles [O/n] ? " packages_choice
     if [[ "$packages_choice" = 'O' ]]; then
       sudo apt install -y $packages
+    fi
 sleep 2
 
 echo ""
 echo -e "${GREEN}################################################################"
-echo "###            Pre-requis installes                          ###"
+echo "###                 Pre-requis installes                     ###"
 echo -e "################################################################${NOCOLOR}"
 echo ""
 sleep 2
@@ -94,12 +95,13 @@ sleep 2
 echo ""
 echo -e "${GREEN}### Configuration de GIT avec des couleurs${NOCOLOR}"
 read -p "Voulez-vous installer Git [O/n] : " git_install
+  read -p "Dossier d'installation du Repo GIT (ex: /opt/Git/): " git_folder
   if [[ "$git_install" = 'O' ]]; then
     read -p "Utilisateur Git : " git_user
     read -p "Email pour Git : " git_email
-    read -p "Dossier d'installation du Repo GIT (ex: /opt/Git/): " git_folder
-
-    mkdir $git_folder && cd /$git_folder
+      if [ ! -d /$git_folder]; then
+	mkdir $git_folder && cd /$git_folder
+      fi
     git config --global color.diff auto
     git config --global color.status auto
     git config --global color.branch auto
@@ -108,7 +110,7 @@ read -p "Voulez-vous installer Git [O/n] : " git_install
 
 # git clone https://github.com/petitsurfeur/cybit-script.git
 
-    cd $git_folder && ./install_update.sh
+    cd $git_folder/cybit-script/update/ && ./install_update.sh
   fi
 
 echo ""
@@ -121,37 +123,37 @@ read -p "Voulez-vous installer Vim [O/n] ? " vim_choice
 
 read -p "Voulez-vous installer SSH [O/n] ? " ssh_choice
   if [[ "$ssh_choice" = 'O' ]]; then
-        cd /opt/Git_Repos/cybit-script/ssh/ && ./install_ssh.sh
+        cd $git_folder/cybit-script/ssh/ && ./install_ssh.sh
 	  fi
 
 read -p "Voulez-vous installer .bashrc [O/n] ? " bashrc_choice
   if [[ "$bashrc_choice" = 'O' ]]; then
-        cd /opt/Git_Repos/cybit-script/bashrc && ./install_bashrc.sh
+        cd $git_folder/cybit-script/bashrc && ./install_bashrc.sh
 	  fi
 
 read -p "Voulez-vous installer Exim4 [O/n] ? " exim4_choice
   if [[ "$exim4_choice" = 'O' ]]; then
-        cd /opt/Git_Repos/cybit-script/exim4 && ./install_exim4.sh
+        cd $git_folder/cybit-script/exim4 && ./install_exim4.sh
 	  fi
 
 read -p "Voulez-vous installer Apticron [O/n] ? " apticron_choice
   if [[ "$apticron_choice" = 'O' ]]; then
-        cd /opt/Git_Repos/cybit-script/apticron && ./install_apticron.sh
+        cd $git_folder/cybit-script/apticron && ./install_apticron.sh
 	  fi
 
 read -p "Voulez-vous installer Fail2ban [O/n] ? " fail2ban_choice
   if [[ "$fail2ban_choice" = 'O' ]]; then
-         cd /opt/Git_Repos/cybit-script/fail2ban && ./install_fail2ban.sh
+         cd $git_folder/cybit-script/fail2ban && ./install_fail2ban.sh
            fi
 
 read -p "Voulez-vous installer  UFW [O/n] ? " ufw_choice
   if [[ "$ufw_choice" = 'O' ]]; then
-         cd /opt/Git_Repos/cybit-script/firewall && ./install_firewall.sh
+         cd $git_folder/cybit-script/firewall && ./install_firewall.sh
            fi
 
 read -p "Voulez-vous installer OpenVPN [O/n] ? " openvpn_choice
   if [[ "$openvpn_choice" = 'O' ]]; then
-         cd /opt/Git_Repos/cybit-script/openvpn && ./install_openvpn_server.sh
+         cd $git_folder/cybit-script/openvpn && ./install_openvpn_server.sh
            fi
 
 echo ""
