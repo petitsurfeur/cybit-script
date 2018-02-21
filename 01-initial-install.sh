@@ -10,12 +10,12 @@ set -e
 #
 # Written to be used on 64 bits computers
 # Author            : Petitsurfeur
-# Website           : http://
+# Website           : http://www.petitsurfeur.net
 #
 # Modified by       : 
-# Version           : v2
+# Version           : v2.1
 # Start date        : 16/06/2017
-# Last modified date: 09/07/2017
+# Last modified date: 21/02/2018
 #
 # #################################################################
 
@@ -26,79 +26,97 @@ set -e
 ###################################################################
 
 echo ""
-echo -e "${GREEN}### Mise-à-jour du Système${NOCOLOR}"
+echo -e "${GREEN}### Configuration du Système${NOCOLOR}"
 
-read -p "S'agit-il d'un serveur Proxmox (desactiver l'apt source pve-enterprise.list) [O/n) ? " proxmox_choice
-  if [[ "$proxmox_choice" = 'O' ]] && [ -f /etc/apt/sources.list.d/pve-enterprise.list ]; then
-    mv /etc/apt/sources.list.d/pve-enterprise.list /etc/apt/sources.list.d/pve-enterprise.list.bak
-  fi
-  
-read -p "Voulez-vous configurer le hostname et ajouter un utilisateur [O/n] ? " hostname_conf
-if [[ "$hostname_conf" = 'O' ]]; then
-  ActualFullHostname=$(hostname -f)
-  IpAddr=$(hostname -i)
-  ActualServerName=$(hostname -s)
-
-  read -p "Nom du serveur (ex: tatooine) : " server_name
-  read -p "Nom de domaine utilise (ex: dns.net) : " dns
-  read -p "DNS complet (ex: tatooine.dns.net) : " fqdn
-  read -p "Utilisateur a creer : " login
-
-  echo $fqdn > /etc/hostname
-  echo $dns > /etc/mailname
-
-  sed -i -e 's/'"$ActualFullHostname"'/'"$fqdn"'/' '/etc/hosts'
-  sed -i -e 's/'"$ActualServerName"'/'"$server_name"'/' '/etc/hosts'
-
-  echo ""
-  echo -e "${GREEN}### Création de l'utilisateur${NOCOLOR}"
-    if [ ! -d /home/$login/ ]; then
-          adduser $login
-  	  else echo -e "L'utilisateur $login existe deja"
+  read -p "S'agit-il d'un serveur Proxmox (desactiver l'apt source pve-enterprise.list) [O/n) ? " proxmox_choice
+    if [[ "$proxmox_choice" = 'O' ]] && [ -f /etc/apt/sources.list.d/pve-enterprise.list ]; then
+      mv /etc/apt/sources.list.d/pve-enterprise.list /etc/apt/sources.list.d/pve-enterprise.list.bak
     fi
-    usermod -a -G adm,sudo,www-data $login
-fi
-
-read -p "Voulez-vous lancer la mise-a-jour du systeme [O/n] ? " update_choice
-if [[ "$update_choice" = 'O' ]]; then
-  apt -y install sudo                          #
-  sudo apt update -y
-  sudo apt upgrade -y
-fi
-sleep 5
 
 echo ""
-echo -e "${GREEN}### Installation des paquets necessaires${NOCOLOR}"
+echo -e "Actuellement le nom de machine est "$(hostname -s)" et le Full Name est "$(hostname -f)""   
+  read -p "Voulez-vous configurer le hostname [O/n] ? " hostname_conf
+    if [[ "$hostname_conf" = 'O' ]]; then
+      ActualFullHostname=$(hostname -f)
+      IpAddr=$(hostname -i)
+      ActualServerName=$(hostname -s)
 
-sudo apt -y install unrar-free unzip zip hardinfo hwinfo htop sysv-rc-conf locate git curl iperf                 
-sleep 5
+      read -p "Nom du serveur (ex: tatooine) : " server_name
+      read -p "Nom de domaine utilise (ex: dns.net) : " dns
+      read -p "DNS complet (ex: tatooine.dns.net) : " fqdn
+      read -p "Utilisateur a creer : " login
+
+      echo $fqdn > /etc/hostname
+      echo $dns > /etc/mailname
+
+      sed -i -e 's/'"$ActualFullHostname"'/'"$fqdn"'/' '/etc/hosts'
+      sed -i -e 's/'"$ActualServerName"'/'"$server_name"'/' '/etc/hosts'
+      fi
+
+echo ""    
+  read -p "Voulez-vous ajouter/parametrer un utilisateur [O/n] ? " user_choice
+    if [[ "$user_choice" = 'O' ]]; then
+      read -p "Quel est le nom d'utilisateur (ex: admin) : "  user_add
+        if [ ! -d /home/$user_add/ ]; then
+          adduser $user_add
+          usermod -a -G adm,sudo,www-data $user_add
+      echo -e "L'utilisateur $user_add a ete cree et ajoute aux groupes adm, sudo et www-data"
+      else echo -e "L'utilisateur $user_add existe deja et il a ete ajoute aux groupes adm, sudo et www-data"
+      usermod -a -G adm,sudo,www-data $user_add
+      fi
+    fi
+
+echo ""
+echo -e "${GREEN}### Mise-a-jour du systeme${NOCOLOR}"
+  read -p "Voulez-vous lancer la mise-a-jour du systeme [O/n] ? " upgrade_choice
+    if [[ "$upgrade_choice" = 'O' ]]; then
+      apt -y install sudo                          
+      sudo apt update -y && sudo apt upgrade -y
+    fi
+sleep 2
+
+echo ""
+echo -e "${GREEN}### Installation des paquets utiles${NOCOLOR}"
+  packages = unrar-free unzip hardinfo hwinfo htop sysv-rc-conf locate git curl
+  echo -e "Les paquets utiles sont : " $packages
+  read -p "Voulez-vous installer les paquets utiles [O/n] ? " packages_choice
+    if [[ "$packages_choice" = 'O' ]]; then
+      sudo apt install -y $packages
+sleep 2
 
 echo ""
 echo -e "${GREEN}################################################################"
-echo "###           Pre-requis installes                          ###"
+echo "###            Pre-requis installes                          ###"
 echo -e "################################################################${NOCOLOR}"
 echo ""
-sleep 5
+sleep 2
 
 echo ""
 echo -e "${GREEN}### Configuration de GIT avec des couleurs${NOCOLOR}"
-git config --global color.diff auto
-git config --global color.status auto
-git config --global color.branch auto
-read -p "Utilisateur Git : " git_user
-read -p "Email pour Git : " git_email
-git config --global user.name $git_user
-git config --global user.mail $git_email
+read -p "Voulez-vous installer Git [O/n] : " git_install
+  if [[ "$git_install" = 'O' ]]; then
+    read -p "Utilisateur Git : " git_user
+    read -p "Email pour Git : " git_email
+    read -p "Dossier d'installation du Repo GIT (ex: /opt/Git/): " git_folder
+
+    mkdir $git_folder && cd /$git_folder
+    git config --global color.diff auto
+    git config --global color.status auto
+    git config --global color.branch auto
+    git config --global user.name $git_user
+    git config --global user.mail $git_email
 
 # git clone https://github.com/petitsurfeur/cybit-script.git
 
-cd /opt/Git_Repos/cybit-script/update/ && ./install_update.sh
+    cd $git_folder && ./install_update.sh
+  fi
 
+echo ""
 echo -e "${GREEN}### Installation et configuration des outils tiers${NOCOLOR}"
 
 read -p "Voulez-vous installer Vim [O/n] ? " vim_choice
   if [[ "$vim_choice" = 'O' ]]; then
-        cd /opt/Git_Repos/cybit-script/vim/ && ./install_vim.sh
+        cd $git_folder/cybit-script/vim/ && ./install_vim.sh
           fi
 
 read -p "Voulez-vous installer SSH [O/n] ? " ssh_choice
@@ -142,7 +160,7 @@ echo "###           Installation terminee                          ###"
 echo -e "################################################################${NOCOLOR}"
 echo ""
 read -p "Voulez-vous redemarrer [O/n] ? " reboot
-if [[ "$reboot" = 'O' ]]; then
-  shutdown -r now
-fi
+  if [[ "$reboot" = 'O' ]]; then
+    shutdown -r now
+  fi
 
