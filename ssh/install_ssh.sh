@@ -27,7 +27,7 @@ sed -i '/PermitRootLogin no/a\AllowUsers '"$ssh_user"'' '/etc/ssh/sshd_config'
 sed -i -e 's/^#*MaxStartups.*$/MaxStartups 3:50:10/g' /'etc/ssh/sshd_config'
 
 echo ""
-echo -e "${GREEN}### Redemarrage du service${NOCOLOR}"
+echo -e "${GREEN}--> Redemarrage du service${NOCOLOR}"
 service ssh restart
 
 echo ""

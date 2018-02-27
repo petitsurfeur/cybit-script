@@ -17,4 +17,5 @@ fi
 EOF
 
 echo ""
-echo -e "${RED}### Pour personnaliser le message d'accueil > http://patorjk.com/software/taag/#p=display&f=Colossal&t=Nom%20du%20Serveur${NOCOLOR}"
+read -p "Nom du serveur (ex: tatooine) : " server_name
+echo -e "${RED}### Pour personnaliser le message d'accueil dans /etc/motd > http://patorjk.com/software/taag/#p=display&f=Colossal&t="${server_name}" ${NOCOLOR}"
