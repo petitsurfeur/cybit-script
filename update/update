@@ -27,7 +27,7 @@ sudo apt upgrade --yes
 echo
 
 echo -e "step 5: ${GREEN}met-à-jour la distribution (dist-upgrade)${NOCOLOR}"
-sudo apt dist-upgrade
+sudo apt dist-upgrade --yes
 
 echo
 
