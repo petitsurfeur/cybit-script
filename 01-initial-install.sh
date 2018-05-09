@@ -34,6 +34,15 @@ echo -e "${GREEN}### Configuration du Système${NOCOLOR}"
     fi
 
 echo ""
+echo -e "${GREEN}### Ajustement de l'heure${NOCOLOR}"
+
+  if [ ! -f /etc/localtime.SAVE ]; then
+    mv /etc/localtime /etc/localtime.SAVE 
+    ln -s /usr/share/zoneinfo/Europe/Paris /etc/localtime
+  fi
+  date
+
+echo ""
 echo -e "--> Actuellement le nom de machine est "${RED}$(hostname -s)${NOCOLOR}" et le Full Name est "${RED}$(hostname -f)${NOCOLOR}""   
   read -p "Voulez-vous configurer le hostname [O/n] ? " hostname_conf
     if [[ "$hostname_conf" = 'O' ]]; then
@@ -50,7 +59,8 @@ echo -e "--> Actuellement le nom de machine est "${RED}$(hostname -s)${NOCOLOR}"
 
       sed -i -e 's/'"$ActualFullHostname"'/'"$fqdn"'/' '/etc/hosts'
       sed -i -e 's/'"$ActualServerName"'/'"$server_name"'/' '/etc/hosts'
-      fi
+      hostname -F /etc/hostname
+    fi
 
 echo ""    
   read -p "Voulez-vous ajouter/parametrer un utilisateur [O/n] ? " user_choice

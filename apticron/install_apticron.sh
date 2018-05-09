@@ -34,4 +34,6 @@ EOF
 
 echo ""
 echo -e " ${green}### Execution d'Apticron et envoi d'un mail${NOCOLOR}"
+systemctl restart exim4.service
 apticron
+tail -10 /var/log/exim4/mainlog
