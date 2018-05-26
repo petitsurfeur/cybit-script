@@ -1,0 +1,62 @@
+#!/bin/bash
+
+RED="\033[1;31m"
+GREEN="\033[1;32m"
+NOCOLOR="\033[0m"
+
+set -e
+
+echo ""
+echo -e " ${GREEN}### Installation de MariaDB, Nginx et Php-7.2${NOCOLOR}"
+echo ""
+echo -e " ${GREEN}### Installation de MariaDB${NOCOLOR}"
+
+apt install mariadb-server mariadb-client --yes
+echo ""
+echo -e " ${GREEN}### Securisation de MariaDB${NOCOLOR}"
+mysql_secure_installation
+systemctl restart mariadb.service
+
+
+echo -e " ${GREEN}### Installation de Nginx${NOCOLOR}"
+
+read -p "Quel est l'URL du serveur (ex: www.petitsurfeur.net) ? " url_server_choice
+apt install nginx --yes
+
+if [ ! -f /etc/nginx/sites-available/default.SAVE]; then
+  cp /etc/nginx/sites-available/default /etc/nginx/sites/available/default.SAVE
+  cp default /etc/nginx/sites-available/
+ fi
+
+sed -i "s/server_name XXX.COM;/server_name $url_server_choice;/" /etc/nginx/sites-available/default
+
+systemctl restart nginx.service
+
+echo -e " ${GREEN}### Installation de PHP-7.2${NOCOLOR}"
+apt install apt-transport-https ca-certificates --yes
+wget -O /etc/apt/trusted.gpg.d/php.gpg https://packages.sury.org/php/apt.gpg
+sh -c 'echo "deb https://packages.sury.org/php/ stretch main" > /etc/apt/sources.list.d/php.list'
+apt update
+
+apt install php7.2-apcu php7.2-bcmath php7.2-cli php7.2-curl php7.2-fpm php7.2-gd php7.2-intl php7.2-mcrypt php7.2-mysql php7.2-soap php7.2-xml php7.2-zip --yes
+
+read -p "Voulez-vous configurer Nging (memory_limit, upload_max,...) [O/n] ? " nginx_config_choice
+    if [[ "$nginx_config_choice" = 'O' ]]; then
+      cp /etc/php/7.2/fpm/php.ini /etc/php/7.2/fpm/php.ini.SAVE
+      sudo sed -i "s/memory_limit = .*/memory_limit = 256M/" /etc/php/7.2/fpm/php.ini
+      sudo sed -i "s/upload_max_filesize = .*/upload_max_filesize = 128M/" /etc/php/7.2/fpm/php.ini
+      sudo sed -i "s/zlib.output_compression = .*/zlib.output_compression = on/" /etc/php/7.2/fpm/php.ini
+      sudo sed -i "s/max_execution_time = .*/max_execution_time = 18000/" /etc/php/7.2/fpm/php.ini
+
+nginx -t     
+sudo systemctl restart nginx.service
+
+echo ""
+echo -e " ${GREEN}### Installation de Phpmyadmin${NOCOLOR}"
+
+read -p "Quel est l'URL du serveur (ex: www.petitsurfeur.net) ? " url_server_choice
+
+apt install phpmyadmin --yes
+cp phpmyadmin.conf /etc/nginx/conf.d/
+
+sed -i "s/server_name pma.example.com;/server_name $url_server_choicei;/" /etc/nginx/conf.d/phpmyadmin.conf
