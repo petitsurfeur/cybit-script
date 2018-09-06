@@ -107,7 +107,8 @@ read -p "Voulez-vous installer Git [O/n] : " git_install
   if [[ "$git_install" = 'O' ]]; then
     read -p "Utilisateur Git : " git_user
     read -p "Email pour Git : " git_email
-      if [ ! -d /$git_folder]; then
+    read -p "--> Dossier d'installation du Repo GIT (ex: /opt/Git_Repos/): " git_folder
+    if [ ! -d /$git_folder]; then
 	mkdir $git_folder && cd /$git_folder
       fi
     git config --global color.diff auto
@@ -123,8 +124,6 @@ read -p "Voulez-vous installer Git [O/n] : " git_install
 
 echo ""
 echo -e "${GREEN}### Installation et configuration des outils tiers${NOCOLOR}"
-
-read -p "--> Dossier d'installation du Repo GIT (ex: /opt/Git/): " git_folder
 
 echo ""
 read -p "Voulez-vous planifier la mise a jour quotidienne du Systeme ? (Copie du script update dans /root) [O/n] " update_install_script
