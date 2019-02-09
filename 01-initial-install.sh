@@ -86,7 +86,7 @@ echo -e "${GREEN}### Mise-a-jour du systeme${NOCOLOR}"
 
 echo ""
 echo -e "${GREEN}### Installation des paquets utiles${NOCOLOR}"
-  packages='unrar-free unzip hardinfo hwinfo htop sysv-rc-conf locate git curl net-tools'
+  packages='unrar-free unzip hardinfo hwinfo htop tree sysv-rc-conf locate git curl net-tools'
   echo -e "Les paquets utiles sont :  $packages"
   read -p "Voulez-vous installer les paquets utiles [O/n] ? " packages_choice
     if [[ "$packages_choice" = 'O' ]]; then
@@ -103,11 +103,11 @@ sleep 2
 
 echo ""
 echo -e "${GREEN}### Configuration de GIT avec des couleurs${NOCOLOR}"
-read -p "Voulez-vous installer Git [O/n] : " git_install
+read -p "Voulez-vous installer/configurer Git [O/n] : " git_install
   if [[ "$git_install" = 'O' ]]; then
     read -p "Utilisateur Git : " git_user
     read -p "Email pour Git : " git_email
-    read -p "--> Dossier d'installation du Repo GIT (ex: /opt/Git_Repos/): " git_folder
+    read -p "--> Dossier d'installation du Repo GIT (ex: /opt/Git_Repos): " git_folder
     if [ ! -d /$git_folder]; then
 	mkdir $git_folder && cd /$git_folder
       fi
@@ -138,7 +138,7 @@ read -p "Voulez-vous installer Vim [O/n] ? " vim_choice
   fi
 
 echo ""
-read -p "Voulez-vous installer SSH [O/n] ? " ssh_choice
+read -p "Voulez-vous configurer SSH Server [O/n] ? " ssh_choice
   if [[ "$ssh_choice" = 'O' ]]; then
         cd $git_folder/cybit-script/ssh/ && ./install_ssh.sh
   fi

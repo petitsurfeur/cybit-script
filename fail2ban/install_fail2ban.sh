@@ -8,7 +8,7 @@ set -e
 
 read -p "Email du destinataire (admin) : " dest_email
 read -p "Email de l'expediteur : " sender_email
-read -p "Machines a Whitelister : " whitelist
+read -p "Machines a Whitelister (separer les IP par des espaces) : " whitelist
 
 
 echo ""
