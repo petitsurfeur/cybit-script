@@ -86,7 +86,7 @@ echo -e "${GREEN}### Mise-a-jour du systeme${NOCOLOR}"
 
 echo ""
 echo -e "${GREEN}### Installation des paquets utiles${NOCOLOR}"
-  packages='unrar-free unzip hardinfo hwinfo htop sysv-rc-conf locate git curl net-tools'
+  packages='unrar-free unzip hardinfo hwinfo htop tree sysv-rc-conf locate git curl net-tools'
   echo -e "Les paquets utiles sont :  $packages"
   read -p "Voulez-vous installer les paquets utiles [O/n] ? " packages_choice
     if [[ "$packages_choice" = 'O' ]]; then
