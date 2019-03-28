@@ -1,7 +1,21 @@
 [DEFAULT]
-bantime = 64800 ; 18 heures
-findtime = 6000 ; 100 minutes
-maxretry = 3
+# Separer les IP par des espaces
+ignoreip = 127.0.0.1/8 xxx.xx
+
+# Duree du ban en secondes. 1029600 = 2 semaines
+bantime = 1029600 # = 2 semaines
+
+# A host is banned if it has generated "maxretry" during the last "findtime"
+findtime = 600 
+maxretry = 3 
+
+destemail = admin@xxx.xx 
+sender = xxxx@xxx.xx
+sendername = Fail2Ban 
+
+# Pour recevoir les logs avec le mail
+action = %(action_mwl)s
+
 
 [ssh]
 enabled  = true
@@ -15,14 +29,12 @@ enabled  = true
 port     = 2022
 filter   = dropbear
 logpath  = /var/log/auth.log
-maxretry = 3
 
 [ssh-ddos]
 enabled  = true
 port     = 2022
 filter   = sshd-ddos
 logpath  = /var/log/auth.log
-maxretry = 3
  
 [ddos]
 enabled = true

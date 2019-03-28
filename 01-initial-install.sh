@@ -86,7 +86,7 @@ echo -e "${GREEN}### Mise-a-jour du systeme${NOCOLOR}"
 
 echo ""
 echo -e "${GREEN}### Installation des paquets utiles${NOCOLOR}"
-  packages='unrar-free unzip hardinfo hwinfo htop tree sysv-rc-conf locate git curl net-tools'
+  packages='unrar-free unzip hardinfo hwinfo htop tree sysv-rc-conf locate git curl net-tools dirmngr'
   echo -e "Les paquets utiles sont :  $packages"
   read -p "Voulez-vous installer les paquets utiles [O/n] ? " packages_choice
     if [[ "$packages_choice" = 'O' ]]; then
@@ -118,9 +118,8 @@ read -p "Voulez-vous installer/configurer Git [O/n] : " git_install
     git config --global user.mail $git_email
 
 # git clone https://github.com/petitsurfeur/cybit-script.git
-
-    cd $git_folder/cybit-script/update/ && ./install_update.sh
   fi
+  read -p "--> Dossier d'installation du Repo GIT (ex: /opt/Git_Repos): " git_folder
 
 echo ""
 echo -e "${GREEN}### Installation et configuration des outils tiers${NOCOLOR}"
