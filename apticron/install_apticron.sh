@@ -9,7 +9,7 @@ set -e
 echo ""
 echo -e " ${GREEN}### Installation d'Apticron${NOCOLOR}"
 
-read -p "Email du destinataire (admin) : " dest_email
+read -p "Email du destinataire (admin@xx.xx) : " dest_email
 read -p "Email de l'expediteur : " sender_email
 
 apt install apticron --yes

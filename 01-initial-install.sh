@@ -99,7 +99,6 @@ echo -e "${GREEN}###############################################################
 echo "###                 Pre-requis installes                     ###"
 echo -e "################################################################${NOCOLOR}"
 echo ""
-sleep 2
 
 echo ""
 echo -e "${GREEN}### Configuration de GIT avec des couleurs${NOCOLOR}"
@@ -107,10 +106,10 @@ read -p "Voulez-vous installer/configurer Git [O/n] : " git_install
   if [[ "$git_install" = 'O' ]]; then
     read -p "Utilisateur Git : " git_user
     read -p "Email pour Git : " git_email
-    read -p "--> Dossier d'installation du Repo GIT (ex: /opt/Git_Repos): " git_folder
-    if [ ! -d /$git_folder]; then
+#    read -p "--> Dossier d'installation du Repo GIT (ex: /opt/Git_Repos): " git_folder
+    if [[ ! -d /$git_folder ]]; then
 	mkdir $git_folder && cd /$git_folder
-      fi
+    fi
     git config --global color.diff auto
     git config --global color.status auto
     git config --global color.branch auto
@@ -119,7 +118,12 @@ read -p "Voulez-vous installer/configurer Git [O/n] : " git_install
 
 # git clone https://github.com/petitsurfeur/cybit-script.git
   fi
-  read -p "--> Dossier d'installation du Repo GIT (ex: /opt/Git_Repos): " git_folder
+
+  echo ""
+read -p "Dossier d'installation du Repo GIT (ex: /opt/Git_Repos): " git_folder
+  if [[ ! -d /$git_folder ]]; then
+    mkdir $git_folder && cd /$git_folder
+  fi
 
 echo ""
 echo -e "${GREEN}### Installation et configuration des outils tiers${NOCOLOR}"

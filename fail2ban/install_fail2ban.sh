@@ -6,7 +6,7 @@ NOCOLOR="\033[0m"
 
 set -e
 
-read -p "Email du destinataire (admin) : " dest_email
+read -p "Email du destinataire (admin@xx.xx) : " dest_email
 read -p "Email de l'expediteur : " sender_email
 read -p "Machines a Whitelister (separer les IP par des espaces) : " whitelist
 
