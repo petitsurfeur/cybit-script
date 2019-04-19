@@ -25,8 +25,23 @@ set -e
 #
 ###################################################################
 
+# Library Path
+LIBRARYPATH=libraries
+
+# Load Libraries
+for file in $LIBRARYPATH/*.sh; do
+  # Source Libraries
+  source $file
+done
+
+# Check if root
+if [[ "$EUID" -ne 0 ]]; then
+ error "Desole, vous devez etre ROOT pour lancer le script."
+  exit
+fi
+
 echo ""
-echo -e "${GREEN}### Configuration du Système${NOCOLOR}"
+header "### Configuration du Système ###"
 
   read -p "S'agit-il d'un serveur Proxmox (desactiver l'apt source pve-enterprise.list) [O/n) ? " proxmox_choice
     if [[ "$proxmox_choice" = 'O' ]] && [ -f /etc/apt/sources.list.d/pve-enterprise.list ]; then
@@ -34,7 +49,7 @@ echo -e "${GREEN}### Configuration du Système${NOCOLOR}"
     fi
 
 echo ""
-echo -e "${GREEN}### Ajustement de l'heure${NOCOLOR}"
+header "### Ajustement de l'heure ###"
 
   if [ ! -f /etc/localtime.SAVE ]; then
     mv /etc/localtime /etc/localtime.SAVE 
@@ -76,7 +91,7 @@ echo ""
     fi
 
 echo ""
-echo -e "${GREEN}### Mise-a-jour du systeme${NOCOLOR}"
+header "### Mise-a-jour du systeme ###"
   read -p "Voulez-vous lancer la mise-a-jour du systeme [O/n] ? " upgrade_choice
     if [[ "$upgrade_choice" = 'O' ]]; then
       apt -y install sudo                          
@@ -85,7 +100,7 @@ echo -e "${GREEN}### Mise-a-jour du systeme${NOCOLOR}"
     fi
 
 echo ""
-echo -e "${GREEN}### Installation des paquets utiles${NOCOLOR}"
+header "### Installation des paquets utiles"
   packages='unrar-free unzip hardinfo hwinfo htop tree sysv-rc-conf locate git curl net-tools dirmngr'
   echo -e "Les paquets utiles sont :  $packages"
   read -p "Voulez-vous installer les paquets utiles [O/n] ? " packages_choice
@@ -101,7 +116,7 @@ echo -e "################################################################${NOCOL
 echo ""
 
 echo ""
-echo -e "${GREEN}### Configuration de GIT avec des couleurs${NOCOLOR}"
+header "### Configuration de GIT avec des couleurs ###"
 read -p "Voulez-vous installer/configurer Git [O/n] : " git_install
   if [[ "$git_install" = 'O' ]]; then
     read -p "Utilisateur Git : " git_user
@@ -126,7 +141,7 @@ read -p "Dossier d'installation du Repo GIT (ex: /opt/Git_Repos): " git_folder
   fi
 
 echo ""
-echo -e "${GREEN}### Installation et configuration des outils tiers${NOCOLOR}"
+header "### Installation et configuration des outils tiers ###"
 
 echo ""
 read -p "Voulez-vous planifier la mise a jour quotidienne du Systeme ? (Copie du script update dans /root) [O/n] " update_install_script

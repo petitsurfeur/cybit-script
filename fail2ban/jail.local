@@ -6,7 +6,7 @@ ignoreip = 127.0.0.1/8 xxx.xx
 bantime = 1029600 # = 2 semaines
 
 # A host is banned if it has generated "maxretry" during the last "findtime"
-findtime = 600 
+findtime = 6000 
 maxretry = 3 
 
 destemail = admin@xxx.xx 
