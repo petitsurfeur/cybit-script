@@ -39,7 +39,7 @@ echo -e "${GREEN}### Redémarrage de Rsyslog${NOCOLOR}"
 systemctl restart rsyslog.service
 
 echo ""
-echo -e "${GREEN}### Mise en place la rotation des logs${NOCOLOR}"
+echo -e "${GREEN}### Mise en place la rotation des logs UFW${NOCOLOR}"
 cat << 'EOF' > /etc/logrotate.d/ufw
 /var/log/ufw.log {
         weekly
@@ -52,7 +52,7 @@ cat << 'EOF' > /etc/logrotate.d/ufw
 }
 EOF
 
-read -p "S'agit-il d'un serveur Proxmox (Modifier DEFAULT_FORWARD_POLICY=ACCEPT dans /etc/default/ufw) [O-n) ? " proxmox_choice
+read -p "S'agit-il d'un serveur Proxmox (Modifier DEFAULT_FORWARD_POLICY=ACCEPT dans /etc/default/ufw) [O/n) ? " proxmox_choice
   if [[ "$proxmox_choice" = 'O' ]]; then
         cp /etc/default/ufw /etc/default/ufw.SAVE
 	sed -i -e 's/^DEFAULT_FORWARD_POLICY="DROP"/DEFAULT_FORWARD_POLICY="ACCEPT"/' '/etc/default/ufw'
