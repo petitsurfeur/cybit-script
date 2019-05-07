@@ -18,7 +18,7 @@ if [ ! -f /etc/cron.d/update ]; then
   cat << 'EOF' > /etc/cron.d/update
 # cron entry for Update
 
-30 17 * * * root if test -x /root/update; then /root/update --cron; else true; fi
+50 17 * * * root if test -x /root/update; then /root/update --cron; else true; fi
 EOF
 fi
 
@@ -29,6 +29,4 @@ nameserver 127.0.0.1
 nameserver 185.121.177.177
 nameserver 169.237.202.202
 EOF
-
-
 

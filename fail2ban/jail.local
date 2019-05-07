@@ -60,3 +60,18 @@ enabled = true
 port = 25,587
 filter = exim
 logpath = /var/log/exim4/mainlog
+
+[proftpd]
+enabled  = true
+port     = ftp,ftp-data,ftps,ftps-data,2121
+filter   = proftpd
+logpath  = /var/log/proftpd/proftpd.log
+maxretry = 5
+
+[wordpress-wp-login]
+enabled = true
+port    = http,https
+filter  = wordpress-wp-login
+logpath = /var/log/nginx/*_access.log
+maxretry = 6
+

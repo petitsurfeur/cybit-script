@@ -6,8 +6,8 @@ NOCOLOR="\033[0m"
 
 set -e
 
-read -p "Email du destinataire (admin@xx.xx) : " dest_email
-read -p "Email de l'expediteur : " sender_email
+#read -p "Email du destinataire (admin@xx.xx) : " dest_email
+#read -p "Email de l'expediteur : " sender_email
 read -p "Machines a Whitelister (separer les IP par des espaces) : " whitelist
 
 
@@ -33,9 +33,9 @@ sed -i -e 's/^#*ignoreip.*/ignoreip = 127.0.0.1\/8 '"$whitelist"' /' '/etc/fail2
 sed -i -e 's/^#*bantime  = 600/bantime = 864000/' '/etc/fail2ban/jail.local'
 sed -i -e 's/^#*findtime  =.*/findtime = 6000/' '/etc/fail2ban/jail.local'
 sed -i -e 's/^#*maxretry =.*/maxretry = 3/' '/etc/fail2ban/jail.local'
-sed -i -e 's/^#*destemail =.*/destemail = '"$dest_email"' /' '/etc/fail2ban/jail.local'
+sed -i -e 's/^#*destemail =.*/destemail = '"$admin_email"' /' '/etc/fail2ban/jail.local'
 sed -i -e 's/^#*sendername =.*/sendername = Fail2Ban - '"$(hostname -s)"' /' '/etc/fail2ban/jail.local'
-sed -i -e 's/^#*sender =.*/sender = '"$sender_email"' /' '/etc/fail2ban/jail.local'
+sed -i -e 's/^#*sender =.*/sender = '"$server_email"' /' '/etc/fail2ban/jail.local'
 sed -i -e 's/^#*action = %(action_)s/action = %(action_mwl)s/' '/etc/fail2ban/jail.local'
 
 echo ""

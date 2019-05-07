@@ -6,9 +6,9 @@ NOCOLOR="\033[0m"
 
 set -e
 
-read -p "Email de root du serveur : " root_email
+#read -p "Email de root du serveur : " root_email
 
-read -p "Email vers qui envoyer un mail de test : " test_email
+#read -p "Email vers qui envoyer un mail de test : " test_email
 
 echo -e "${GREEN}### Installation d'Exim4 ###${NOCOLOR}"
 apt install -y exim4
@@ -30,6 +30,6 @@ systemctl restart exim4
 
 echo -e "${GREEN}### Envoi d'un mail de test${NOCOLOR}"
 echo -e "${RED}### ATTENDRE 20 sec${NOCOLOR}"
-echo "Ceci est un mail de test." | mail -s Test_Envoi_Mail_$dns $test_email
-cat /var/log/exim4/mainlog
+echo "Ceci est un mail de test." | mail -s Test_Envoi_Mail_$dns $admin_email
 sleep 20
+tail -20 /var/log/exim4/mainlog

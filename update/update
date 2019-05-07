@@ -40,3 +40,4 @@ echo -e "step 7: ${GREEN}nettoie (autoclean)${NOCOLOR}"
 sudo apt-get autoclean
 
 echo
+
