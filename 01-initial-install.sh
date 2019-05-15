@@ -64,7 +64,7 @@ echo ""
 echo ""
   read -p "S'agit-il d'un serveur Proxmox (desactiver l'apt source pve-enterprise.list) [O/n) ? " proxmox_choice
     if [[ "$proxmox_choice" = 'O' ]] && [ -f /etc/apt/sources.list.d/pve-enterprise.list ]; then
-      mv /etc/apt/sources.list.d/pve-enterprise.list /etc/apt/sources.list.d/pve-enterprise.list.bak
+      mv /etc/apt/sources.list.d/pve-enterprise.list /etc/apt/sources.list.d/pve-enterprise.list.SAVE
     fi
 
 echo ""
@@ -112,7 +112,8 @@ echo ""
   read -p "Voulez-vous ajouter/parametrer un utilisateur [O/n] ? " user_choice
     if [[ "$user_choice" = 'O' ]]; then
       read -p "Quel est le nom d'utilisateur (ex: admin) : "  user_add
-        if [ ! -d /home/$user_add/ ]; then
+      export user_add=$user_add
+      if [ ! -d /home/$user_add/ ]; then
           adduser $user_add
           usermod -a -G adm,sudo,www-data $user_add
       echo -e "${GREEN}L'utilisateur $user_add a ete cree et ajoute aux groupes adm, sudo et www-data${NOCOLOR}"

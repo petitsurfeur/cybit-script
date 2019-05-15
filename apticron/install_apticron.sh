@@ -21,8 +21,8 @@ fi
 echo ""
 echo -e " ${GREEN}### Parametrage du fichier de Conf${NOCOLOR}"
 sed -i -e 's/^#*EMAIL=.*/EMAIL="'"$admin_email"'"/' '/etc/apticron/apticron.conf'
-sed -i -e 's/^#*NOTIFY_NO_UPDATES="0"/NOTIFY_NO_UPDATES="1"/' '/etc/apticron/apticron.conf'
-sed -i -e 's/^#*CUSTOM_FROM=.*/CUSTOM_FROM="'"$server_email"'"/' '/etc/apticron/apticron.conf'
+sed -i -e 's/^# NOTIFY_NO_UPDATES="0"/NOTIFY_NO_UPDATES="1"/' '/etc/apticron/apticron.conf'
+sed -i -e 's/^# CUSTOM_FROM=.*/CUSTOM_FROM="'"$server_email"'"/' '/etc/apticron/apticron.conf'
 
 echo ""
 echo -e " ${GREEN}### Modification du Cron dans /etc/cron.d/apticron${NOCOLOR}"
