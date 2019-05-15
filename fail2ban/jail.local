@@ -3,7 +3,7 @@
 ignoreip = 127.0.0.1/8 xxx.xx
 
 # Duree du ban en secondes. 1029600 = 2 semaines
-bantime = 1029600 # = 2 semaines
+bantime = 1029600
 
 # A host is banned if it has generated "maxretry" during the last "findtime"
 findtime = 6000 
@@ -50,26 +50,26 @@ filter = portscan
 logpath = /var/log/kern.log
  
 [proxmox4]
-enabled = true
+enabled = false
 port = https,http,8006
 filter = proxmox4
 logpath = /var/log/daemon.log
  
 [exim]
-enabled = true
+enabled = false
 port = 25,587
 filter = exim
 logpath = /var/log/exim4/mainlog
 
 [proftpd]
-enabled  = true
+enabled  = false
 port     = ftp,ftp-data,ftps,ftps-data,2121
 filter   = proftpd
 logpath  = /var/log/proftpd/proftpd.log
 maxretry = 5
 
 [wordpress-wp-login]
-enabled = true
+enabled = false
 port    = http,https
 filter  = wordpress-wp-login
 logpath = /var/log/nginx/*_access.log

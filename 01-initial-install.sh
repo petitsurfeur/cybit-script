@@ -62,9 +62,11 @@ echo ""
 
 
 echo ""
-  read -p "S'agit-il d'un serveur Proxmox (desactiver l'apt source pve-enterprise.list) [O/n) ? " proxmox_choice
+  read -p "S'agit-il d'un serveur Proxmox (modifier l'apt source pve-enterprise.list) [O/n) ? " proxmox_choice
     if [[ "$proxmox_choice" = 'O' ]] && [ -f /etc/apt/sources.list.d/pve-enterprise.list ]; then
-      mv /etc/apt/sources.list.d/pve-enterprise.list /etc/apt/sources.list.d/pve-enterprise.list.SAVE
+      cp /etc/apt/sources.list.d/pve-enterprise.list /etc/apt/sources.list.d/pve-enterprise.list.SAVE
+      sed -i -e 's/^deb/#deb/' '/etc/apt/sources.list.d/pve-enterprise.list'
+      echo deb http://download.proxmox.com/debian/pve stretch pve-no-subscription >> /etc/apt/sources.list.d/pve-enterprise.list 
     fi
 
 echo ""
@@ -83,9 +85,18 @@ echo -e "--> Actuellement le nom de machine est "${RED}$(hostname -s)${NOCOLOR}"
       ActualFullHostname=$(hostname -f)
       IpAddr=$(hostname -i)
       ActualServerName=$(hostname -s)
+    
+      if [ ! -f /etc/hostname.SAVE ]; then
+        cp /etc/hostname /etc/hostname.SAVE && echo $fqdn > /etc/hostname
+      fi
 
-      echo $fqdn > /etc/hostname
-      echo $dns > /etc/mailname
+      if [ ! -f /etc/mailname.SAVE ]; then
+        cp /etc/mailname /etc/mailname.SAVE && echo $dns > /etc/mailname
+      fi
+
+      if [ ! -f /etc/hosts.SAVE ]; then
+        cp /etc/hosts /etc/hosts.SAVE
+      fi
 
       sed -i -e 's/'"$ActualFullHostname"'/'"$fqdn"'/' '/etc/hosts'
       sed -i -e 's/'"$ActualServerName"'/'"$server_name"'/' '/etc/hosts'
