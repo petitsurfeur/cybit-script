@@ -10,7 +10,7 @@ echo ""
 echo -e "${GREEN}### Installation de Openssh-server${NOCOLOR}"
 #apt update
 read -p "Port a utiliser pour le serveur SSH (ex: 2022): " ssh_port
-read -p "Utilisateur a autoriser pour les connexions SSH (ex: $login :) " ssh_user
+read -p "Utilisateur a autoriser pour les connexions SSH (ex: $user_add :) " ssh_user
 
 apt install -y openssh-server
 
