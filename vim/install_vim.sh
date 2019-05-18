@@ -24,4 +24,7 @@ echo -e "${GREEN}--> Copie du fichier de configuration /etc/vim/vimrc.local${NOC
 
 echo ""
 echo -e "${GREEN}--> Modification du fichier /usr/share/vim/vim80/defaults.vim${NOCOLOR}"
-mv /usr/share/vim/vim80/defaults.vim /usr/share/vim/vim80/defaults.vim.SAVE && cp defaults.vim /usr/share/vim/vim80/
+  if [ -f /usr/share/vim/vim80/defaults.vim ]; then
+    mv /usr/share/vim/vim80/defaults.vim /usr/share/vim/vim80/defaults.vim.SAVE && cp defaults.vim /usr/share/vim/vim80/
+  else echo -e "Fichier defaults.vim absent"
+  fi
