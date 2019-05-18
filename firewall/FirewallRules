@@ -57,7 +57,7 @@ ufw allow out smtp/tcp
 ##############################
 
 ### gpg Server (apt-key adv --keyserver)
-uf allow out 11371/tcp
+ufw allow out 11371/tcp
 
 ### Monip
 #ufw allow in 1337/tcp
