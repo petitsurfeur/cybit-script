@@ -1,0 +1,77 @@
+[DEFAULT]
+# Separer les IP par des espaces
+ignoreip = 127.0.0.1/8 xxx.xx
+
+# Duree du ban en secondes. 1029600 = 2 semaines
+bantime = 1029600
+
+# A host is banned if it has generated "maxretry" during the last "findtime"
+findtime = 6000 
+maxretry = 3 
+
+destemail = admin@xxx.xx 
+sender = xxxx@xxx.xx
+sendername = Fail2Ban 
+
+# Pour recevoir les logs avec le mail
+action = %(action_mwl)s
+
+
+[ssh]
+enabled  = true
+port     = 2022
+filter   = sshd
+maxretry = 3
+logpath = /var/log/auth.log
+
+[dropbear]
+enabled  = true
+port     = 2022
+filter   = dropbear
+logpath  = /var/log/auth.log
+
+[ssh-ddos]
+enabled  = true
+port     = 2022
+filter   = sshd-ddos
+logpath  = /var/log/auth.log
+ 
+[ddos]
+enabled = true
+action = iptables-allports
+protocol = udp
+filter = ddos
+logpath = /var/log/kern.log
+ 
+[portscan]
+enabled = true
+port = 21,22,23,25
+filter = portscan
+logpath = /var/log/kern.log
+ 
+[proxmox4]
+enabled = false
+port = https,http,8006
+filter = proxmox4
+logpath = /var/log/daemon.log
+ 
+[exim]
+enabled = false
+port = 25,587
+filter = exim
+logpath = /var/log/exim4/mainlog
+
+[proftpd]
+enabled  = false
+port     = ftp,ftp-data,ftps,ftps-data,2121
+filter   = proftpd
+logpath  = /var/log/proftpd/proftpd.log
+maxretry = 5
+
+[wordpress-wp-login]
+enabled = false
+port    = http,https
+filter  = wordpress-wp-login
+logpath = /var/log/nginx/*_access.log
+maxretry = 6
+
