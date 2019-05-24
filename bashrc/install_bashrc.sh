@@ -18,4 +18,4 @@ EOF
 
 echo ""
 #read -p "Nom du serveur (ex: tatooine) : " server_name
-echo -e "${RED}### Pour personnaliser le message d'accueil dans /etc/motd > http://patorjk.com/software/taag/#p=display&f=Colossal&t="${server_name}" ${NOCOLOR}"
+echo -e "${RED}### Pour personnaliser le message d'accueil dans /etc/motd > http://patorjk.com/software/taag/#p=display&f=ANSI%20Shadow&t="${server_name}" ${NOCOLOR}"
