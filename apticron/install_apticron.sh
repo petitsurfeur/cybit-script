@@ -9,14 +9,16 @@ set -e
 echo ""
 echo -e " ${GREEN}### Installation d'Apticron${NOCOLOR}"
 
-#read -p "Email du destinataire (admin@xx.xx) : " dest_email
-#read -p "Email de l'expediteur : " sender_email
-
 apt install apticron --yes
+
+if [ ! -f /etc/apticron/apticron.conf ]; then
+  cp /usr/lib/apticron/apticron.conf /etc/apticron
+fi
 
 if [ ! -f /etc/apticron/apticron.conf.SAVE ]; then
  cp /etc/apticron/apticron.conf /etc/apticron/apticron.conf.SAVE
 fi
+
 
 echo ""
 echo -e " ${GREEN}### Parametrage du fichier de Conf${NOCOLOR}"
