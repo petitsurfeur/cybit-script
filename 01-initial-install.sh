@@ -45,6 +45,16 @@ header "### Configuration du Système ###"
 header "###                          ###"
 header "### Definition des variables ###"
 
+
+echo ""
+header "### Installation des paquets utiles"
+  packages='unrar-free unzip hardinfo hwinfo htop tree sysv-rc-conf locate git curl net-tools dirmngr ca-certificates gnupg iptables openssl wget curl'
+  read -p "Voulez-vous installer les paquets utiles suivants : $packages  [O/n] ? " packages_choice
+    if [[ "$packages_choice" = 'O' ]]; then
+      apt install -y $packages
+    sleep 2
+    fi
+
 echo ""
    read -p "Nom du serveur (ex: tatooine) : " server_name
    read -p "Nom de domaine utilise (ex: dns.net) : " dns
@@ -133,15 +143,6 @@ echo ""
       fi
     fi
 
-echo ""
-header "### Installation des paquets utiles"
-  packages='unrar-free unzip hardinfo hwinfo htop tree sysv-rc-conf locate git curl net-tools dirmngr'
-  echo -e "Les paquets utiles sont :  $packages"
-  read -p "Voulez-vous installer les paquets utiles [O/n] ? " packages_choice
-    if [[ "$packages_choice" = 'O' ]]; then
-      sudo apt install -y $packages
-    sleep 2
-    fi
 
 echo ""
 echo -e "${GREEN}################################################################"

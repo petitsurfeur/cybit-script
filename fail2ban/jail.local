@@ -55,54 +55,56 @@ logpath  = %(auditd_log)s
 
 ### HTTP servers ###
 
-[apache-auth]
-enabled  = true
+#[apache-auth]
+#enabled  = true
 
-[apache-badbots]
+#[apache-badbots]
 # Ban hosts which agent identifies spammer robots crawling the web
 # # for email addresses. The mail outputs are buffered.
-enabled  = true
+#enabled  = true
 
-[apache-noscript]
-enabled  = true
+#[apache-noscript]
+#enabled  = true
 
-[apache-overflows]
-enabled  = true
+#[apache-overflows]
+#enabled  = true
 
-[apache-nohome]
-enabled  = true
+#[apache-nohome]
+#enabled  = true
 
-[apache-botsearch]
-enabled  = true
+#[apache-botsearch]
+#enabled  = true
 
-[apache-fakegooglebot]
-enabled  = true
+#[apache-fakegooglebot]
+#enabled  = true
 
-[apache-modsecurity]
-enabled  = true
+#[apache-modsecurity]
+#enabled  = true
 
-[apache-shellshock]
-enabled  = true
+#[apache-shellshock]
+#enabled  = true
 
-[nginx-http-auth]
-enabled  = true
+#[nginx-http-auth]
+#enabled  = true
 
 # To use 'nginx-limit-req' jail you should have `ngx_http_limit_req_module`
 # # and define `limit_req` and `limit_req_zone` as described in nginx documentation
 # # http://nginx.org/en/docs/http/ngx_http_limit_req_module.html
 # # or for example see in 'config/filter.d/nginx-limit-req.conf'
-[nginx-limit-req]
-enabled  = true
+#[nginx-limit-req]
+#enabled  = true
 
-[nginx-botsearch]
-enabled  = true
+#[nginx-botsearch]
+#enabled  = true
 
 # Ban attackers that try to use PHP's URL-fopen() functionality
 # # through GET/POST variables. - Experimental, with more than a year
 # # of usage in production environments.
 #
-[php-url-fopen]
-enabled  = false
+#[php-url-fopen]
+#enabled  = false
+
+### NORMAL
 
 [ddos]
 enabled  = true
@@ -119,11 +121,11 @@ logpath = /var/log/kern.log
 
 ### Web Applications
 
-[proxmox4]
-enabled  = false
-port = https,http,8006
-filter = proxmox4
-logpath = /var/log/daemon.log
+#[proxmox4]
+#enabled  = false
+#port = https,http,8006
+#filter = proxmox4
+#logpath = /var/log/daemon.log
 
 
 [exim]
