@@ -17,8 +17,7 @@ echo -e "${GREEN}### Planification Cron de Update${NOCOLOR}"
 if [ ! -f /etc/cron.d/update ]; then
   cat << 'EOF' > /etc/cron.d/update
 # cron entry for Update
-
-50 17 * * * root if test -x /root/update; then /root/update --cron; else true; fi
+50 17 * * * root if test -x /root/update; then /root/update > /dev/null --cron; else true; fi
 EOF
 fi
 
