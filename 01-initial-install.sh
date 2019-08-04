@@ -46,9 +46,9 @@ header "###                          ###"
 header "### Definition des variables ###"
 
 
-echo ""
 header "### Installation des paquets utiles"
   packages='unrar-free unzip hardinfo hwinfo htop tree sysv-rc-conf locate git curl net-tools dirmngr ca-certificates gnupg iptables openssl wget curl sudo'
+echo ""
   read -p "Voulez-vous installer les paquets utiles suivants : $packages  [O/n] ? " packages_choice
     if [[ "$packages_choice" = 'O' ]]; then
       apt install -y $packages
@@ -122,7 +122,7 @@ header "### Mise-a-jour du systeme ###"
     fi
 
 echo ""
-  read -p "Voulez-vous planifier la mise a jour quotidienne du Systeme ? (Copie du script update dans /root) [O/n] " update_install_script
+  read -p "Voulez-vous planifier la mise a jour quotidienne du Systeme ? (Copie du script System_Update dans /root) [O/n] " update_install_script
     if [[ "$update_install_script" = 'O' ]]; then
       cd $script_PWD/update/ && ./install_update.sh
     fi
