@@ -11,8 +11,7 @@ set -e
 
 echo ""
 echo -e "${GREEN}--> Desinstallation de vim-tiny et installation de Vim${NOCOLOR}"
-apt remove -y vim-tiny 
-apt install -y vim
+apt remove -y vim-tiny && apt install vim -y 
 
 echo ""
 echo -e "${GREEN}--> Copie du fichier de configuration /etc/vim/vimrc.local${NOCOLOR}"
@@ -20,11 +19,19 @@ echo -e "${GREEN}--> Copie du fichier de configuration /etc/vim/vimrc.local${NOC
     rm /etc/vim/vimrc.tiny
   else echo -e "Fichier vimrc.tiny absent"
   fi
+    cp /etc/vim/vimrc /etc/vim/vimrc.SAVE
     cp vimrc.local /etc/vim/
 
 echo ""
 echo -e "${GREEN}--> Modification du fichier /usr/share/vim/vim80/defaults.vim${NOCOLOR}"
   if [ -f /usr/share/vim/vim80/defaults.vim ]; then
-    mv /usr/share/vim/vim80/defaults.vim /usr/share/vim/vim80/defaults.vim.SAVE && cp defaults.vim /usr/share/vim/vim80/
-  else echo -e "Fichier defaults.vim absent"
+    cp /usr/share/vim/vim80/defaults.vim /usr/share/vim/vim80/defaults.vim.SAVE
+    sed -i -e 's|set mouse=a|"set mouse=a|' '/usr/share/vim/vim80/defaults.vim'
+  else echo -e "Fichier defaults.vim dans /usr/share/vim/vim80 absent"
+  fi
+
+  if [ -f /usr/share/vim/vim81/defaults.vim ]; then
+    cp /usr/share/vim/vim81/defaults.vim /usr/share/vim/vim81/defaults.vim.SAVE
+    sed -i -e 's|set mouse=a|"set mouse=a|' '/usr/share/vim/vim81/defaults.vim'
+  else echo -e "Fichier defaults.vim /usr/share/vim/vim81 absent"
   fi

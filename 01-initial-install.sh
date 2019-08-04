@@ -48,7 +48,7 @@ header "### Definition des variables ###"
 
 echo ""
 header "### Installation des paquets utiles"
-  packages='unrar-free unzip hardinfo hwinfo htop tree sysv-rc-conf locate git curl net-tools dirmngr ca-certificates gnupg iptables openssl wget curl'
+  packages='unrar-free unzip hardinfo hwinfo htop tree sysv-rc-conf locate git curl net-tools dirmngr ca-certificates gnupg iptables openssl wget curl sudo'
   read -p "Voulez-vous installer les paquets utiles suivants : $packages  [O/n] ? " packages_choice
     if [[ "$packages_choice" = 'O' ]]; then
       apt install -y $packages
@@ -117,8 +117,7 @@ echo ""
 header "### Mise-a-jour du systeme ###"
   read -p "Voulez-vous lancer la mise-a-jour du systeme [O/n] ? " upgrade_choice
     if [[ "$upgrade_choice" = 'O' ]]; then
-      apt -y install sudo                          
-      sudo apt update -y && sudo apt upgrade -y
+      apt update -y && apt upgrade -y
       sleep 2
     fi
 

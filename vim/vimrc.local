@@ -2,7 +2,7 @@
 
 syntax on           " Active la coloration syntaxique
 "set number              " Affiche les numeros de lignes
-set history=100          " Definit le nombre de commandes enregistres dans l'historique
+set history=1000          " Definit le nombre de commandes enregistres dans l'historique
 set hlsearch            " Met en surbrillance les phrases recherches
 set ic                  " Recherche en ignorant la casse
 set incsearch           " La recherche démarre dès que l'on tape les premiers caracteres
