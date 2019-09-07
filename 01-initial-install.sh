@@ -75,8 +75,7 @@ echo ""
   read -p "S'agit-il d'un serveur Proxmox (modifier l'apt source pve-enterprise.list) [O/n) ? " proxmox_choice
     if [[ "$proxmox_choice" = 'O' ]] && [ -f /etc/apt/sources.list.d/pve-enterprise.list ]; then
       cp /etc/apt/sources.list.d/pve-enterprise.list /etc/apt/sources.list.d/pve-enterprise.list.SAVE
-      sed -i -e 's/^deb/#deb/' '/etc/apt/sources.list.d/pve-enterprise.list'
-      echo deb http://download.proxmox.com/debian/pve stretch pve-no-subscription >> /etc/apt/sources.list.d/pve-enterprise.list 
+      sed -i -e 's/pve-enterprise/pve-no-subscription/' '/etc/apt/sources.list.d/pve-enterprise.list'
     fi
 
 echo ""

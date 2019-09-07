@@ -45,7 +45,7 @@ fi
 echo ""
 read -p "Voulez-vous securiser la connexion par cle [O/n] ? " secured_ssh
   if [[ "$secured_ssh" = 'O' ]] && [ ! -d /home/$ssh_user/.ssh/ ]; then
-    echo -e "${RED}### Vous devez lancer ssh-keygen -t rsa -b 2048 avec l'utilisateur $ssh_user puis creer le fichier authorized_files avant de relancer ce script"
+    echo -e "${RED}### Vous devez lancer ssh-keygen -t rsa -b 2048 avec l'utilisateur $ssh_user puis creer le fichier authorized_keys avant de relancer ce script"
 
     elif [ -f /home/$ssh_user/.ssh/authorized_keys ]; then
       chmod 400 /home/$ssh_user/.ssh/id*
