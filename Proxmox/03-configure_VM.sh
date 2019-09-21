@@ -38,11 +38,16 @@ EOF
 
 echo ""
 echo -e " ${GREEN}### Ajout des Repos${NOCOLOR}"
-cat << 'EOF' >> /etc/apt/sources.list
-# Debian Stretch, dépôt principal + paquets non libres
-deb http://deb.debian.org/debian/ stretch main contrib non-free
-# Debian Stretch, mises-à-jour de sécurité + paquets non libres
-deb http://security.debian.org/ stretch/updates main contrib non-free
-# Debian stretch, mises-à-jour "volatiles" + paquets non libres
-deb http://deb.debian.org/debian/ stretch-updates main contrib non-free
+
+read -p "Quelle est la version de Debian installee [Stretch/Buster] ? " debian_version
+
+cat << 'EOF' >> /etc/apt/sources.list.test
+# Debian debian_version, dépôt principal + paquets non libres
+deb http://deb.debian.org/debian/ debian_version main contrib non-free
+# Debian debian_version, mises-à-jour de sécurité + paquets non libres
+deb http://security.debian.org/ debian_version/updates main contrib non-free
+# Debian debian_version, mises-à-jour "volatiles" + paquets non libres
+deb http://deb.debian.org/debian/ debian_version-updates main contrib non-free
 EOF
+
+sed -i -e 's/debian_version/'"$(lsb_release -cs)"'/' '/etc/apt/sources.list.test'
