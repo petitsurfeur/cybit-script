@@ -8,14 +8,14 @@ set -e
 #
 # #################################################################
 #
-# Written to be used on 64 bits computers
+# Written to be used on 64 bits Linux computers (Ubuntu & Debian)
 # Author            : Petitsurfeur
-# Website           : http://www.petitsurfeur.net
+# Website           : https://www.petitsurfeur.net
 #
 # Modified by       : 
-# Version           : v2.1
+# Version           : v2.5
 # Start date        : 16/06/2017
-# Last modified date: 21/02/2018
+# Last modified date: 01/11/2019
 #
 # #################################################################
 
@@ -35,41 +35,78 @@ for file in $LIBRARYPATH/*.sh; do
 done
 
 # Check if root
-if [[ "$EUID" -ne 0 ]]; then
- error "Desole, vous devez etre ROOT pour lancer le script."
+if [[ "$EUID" -ne 0 ]];
+then
+    error "Sorry, you must be root !"
   exit
 fi
 
-echo ""
-header "### Configuration du Système ###"
-header "###                          ###"
-header "### Definition des variables ###"
+#echo ""
+#header "###      System Configuration             ###"
+#header "###                                       ###"
+#header "###      Variables Definitions            ###"
+  export script_PWD=$PWD
 
 
-header "### Installation des paquets utiles"
-  packages='unrar-free unzip hardinfo hwinfo htop tree sysv-rc-conf locate git curl net-tools dirmngr ca-certificates gnupg iptables openssl wget curl sudo'
 echo ""
-  read -p "Voulez-vous installer les paquets utiles suivants : $packages  [O/n] ? " packages_choice
+header "###         System Update                 ###"
+  read -p "Voulez-vous lancer la mise-a-jour du systeme [O/n] ? " upgrade_choice
+    if [[ "$upgrade_choice" = 'O' ]]; then
+      apt update -y && apt upgrade -y
+      sleep 2
+    fi
+
+echo ""
+header "###    Usefull packets installation       ###"
+  packages='unrar-free unzip hardinfo hwinfo htop tree locate git curl net-tools dirmngr ca-certificates gnupg iptables openssl wget curl sudo'
+#echo ""
+  read -p "Do you want to install this packets : $packages  [O/n] ? " packages_choice
     if [[ "$packages_choice" = 'O' ]]; then
-      apt install -y $packages
+      apt-get install -y $packages
     sleep 2
     fi
 
 echo ""
-   read -p "Nom du serveur (ex: tatooine) : " server_name
-   read -p "Nom de domaine utilise (ex: dns.net) : " dns
-#   read -p "DNS complet (ex: tatooine.dns.net) : " fqdn
+echo -e "--> Actuellement le nom de machine est "${RED}$(hostname -s)${NOCOLOR}" et le Full Name est "${RED}$(hostname -f)${NOCOLOR}""
+read -p "Do you want to change the the hostname or fullname ? [O/n] ? " hostname_conf_choice
+  if [[ "$hostname_conf_choice" = O ]]; 
+  then 
+    read -p "Nom du serveur (ex: tatooine) : " server_name
+    read -p "Nom de domaine utilise (ex: dns.net) : " dns
+    read -p "DNS complet (ex: tatooine.dns.net) : " fqdn
 
-   read -p "Email du serveur (srv-xx@xx.net) : " server_email
-   read -p "Email du destinataire (admin@xxx.xx) : " admin_email
+    read -p "Email du serveur (srv-xx@xx.net) : " server_email
+    read -p "Email du destinataire (admin@xxx.xx) : " admin_email
 
-   export server_name=$server_name
-   export dns=$dns
-   export fqdn=$server_name.$dns
-   export script_PWD=$PWD
-   export admin_email=$admin_email
-   export server_email=$server_email
+    export server_name=$server_name
+    export dns=$dns
+    export fqdn=$server_name.$dns
+    export admin_email=$admin_email
+    export server_email=$server_email
+    export ActualFullHostname=$(hostname -f)
 
+
+      if [[ ! -f /etc/hostname.SAVE ]]; then
+        cp /etc/hostname /etc/hostname.SAVE && echo $fqdn > /etc/hostname
+      fi
+
+      if [[ ! -f /etc/mailname.SAVE ]] & [[ -f /etc/mailname ]]; then
+        cp /etc/mailname /etc/mailname.SAVE && echo $dns > /etc/mailname
+      fi
+
+      if [[ ! -f /etc/hosts.SAVE ]]; then
+        cp /etc/hosts /etc/hosts.SAVE
+      fi
+
+    sed -i -e 's/'"$ActualFullHostname"'/'"$fqdn"'/' '/etc/hosts'
+    sed -i -e 's/'"$ActualServerName"'/'"$server_name"'/' '/etc/hosts'
+    hostname -F /etc/hostname
+  
+  else
+   ActualFullHostname=$(hostname -f)
+   IpAddr=$(hostname -i)
+   ActualServerName=$(hostname -s)
+  fi
 
 echo ""
   read -p "S'agit-il d'un serveur Proxmox (modifier l'apt source pve-enterprise.list) [O/n) ? " proxmox_choice
@@ -79,46 +116,13 @@ echo ""
     fi
 
 echo ""
-header "### Ajustement de l'heure ###"
-
+header "###              Configure Time            ###"
   if [ ! -f /etc/localtime.SAVE ]; then
     mv /etc/localtime /etc/localtime.SAVE 
     ln -s /usr/share/zoneinfo/Europe/Paris /etc/localtime
   fi
   echo -e "${GREEN}L'heure systeme est ${NOCOLOR} $(date)"
 
-echo ""
-echo -e "--> Actuellement le nom de machine est "${RED}$(hostname -s)${NOCOLOR}" et le Full Name est "${RED}$(hostname -f)${NOCOLOR}""   
-  read -p "Voulez-vous configurer le hostname [O/n] ? " hostname_conf
-    if [[ "$hostname_conf" = 'O' ]]; then
-      ActualFullHostname=$(hostname -f)
-      IpAddr=$(hostname -i)
-      ActualServerName=$(hostname -s)
-    
-      if [ ! -f /etc/hostname.SAVE ]; then
-        cp /etc/hostname /etc/hostname.SAVE && echo $fqdn > /etc/hostname
-      fi
-
-      if [ ! -f /etc/mailname.SAVE ]; then
-        cp /etc/mailname /etc/mailname.SAVE && echo $dns > /etc/mailname
-      fi
-
-      if [ ! -f /etc/hosts.SAVE ]; then
-        cp /etc/hosts /etc/hosts.SAVE
-      fi
-
-      sed -i -e 's/'"$ActualFullHostname"'/'"$fqdn"'/' '/etc/hosts'
-      sed -i -e 's/'"$ActualServerName"'/'"$server_name"'/' '/etc/hosts'
-      hostname -F /etc/hostname
-   fi
-
-echo ""
-header "### Mise-a-jour du systeme ###"
-  read -p "Voulez-vous lancer la mise-a-jour du systeme [O/n] ? " upgrade_choice
-    if [[ "$upgrade_choice" = 'O' ]]; then
-      apt update -y && apt upgrade -y
-      sleep 2
-    fi
 
 echo ""
   read -p "Voulez-vous planifier la mise a jour quotidienne du Systeme ? (Copie du script System_Update dans /root) [O/n] " update_install_script

@@ -24,8 +24,8 @@ echo -e "${GREEN}--> Copie du fichier de configuration /etc/vim/vimrc.local${NOC
 
 echo ""
 echo -e "${GREEN}--> Modification du fichier /usr/share/vim/vim80/defaults.vim${NOCOLOR}"
-  if [ -f /usr/share/vim/vim80/defaults.vim ]; then
-    cp /usr/share/vim/vim80/defaults.vim /usr/share/vim/vim80/defaults.vim.SAVE
+  if [ -f /usr/share/vim/vim81/defaults.vim ]; then
+    cp /usr/share/vim/vim81/defaults.vim /usr/share/vim/vim81/defaults.vim.SAVE
     sed -i -e 's|set mouse=a|"set mouse=a|' '/usr/share/vim/vim80/defaults.vim'
   else echo -e "Fichier defaults.vim dans /usr/share/vim/vim80 absent"
   fi
