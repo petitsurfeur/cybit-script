@@ -37,7 +37,7 @@ done
 # Check if root
 if [[ "$EUID" -ne 0 ]];
 then
-    error "Sorry, you must be root !"
+    error "Desole, vous devez etre ROOT !"
   exit
 fi
 
@@ -50,7 +50,7 @@ fi
 
 echo ""
 header "###         System Update                 ###"
-  read -p "Voulez-vous lancer la mise-a-jour du systeme [O/n] ? " upgrade_choice
+  read -p "Voulez-vous mettre a jour le systeme [O/n] ? " upgrade_choice
     if [[ "$upgrade_choice" = 'O' ]]; then
       apt update -y && apt upgrade -y
       sleep 2
@@ -60,7 +60,7 @@ echo ""
 header "###    Usefull packets installation       ###"
   packages='unrar-free unzip hardinfo hwinfo htop tree locate git curl net-tools dirmngr ca-certificates gnupg iptables openssl wget curl sudo'
 #echo ""
-  read -p "Do you want to install this packets : $packages  [O/n] ? " packages_choice
+read -p "Voulez-vous installer les paquets suivants (utiles) : $packages  [O/n] ? " packages_choice
     if [[ "$packages_choice" = 'O' ]]; then
       apt-get install -y $packages
     sleep 2
@@ -68,7 +68,7 @@ header "###    Usefull packets installation       ###"
 
 echo ""
 echo -e "--> Actuellement le nom de machine est "${RED}$(hostname -s)${NOCOLOR}" et le Full Name est "${RED}$(hostname -f)${NOCOLOR}""
-read -p "Do you want to change the the hostname or fullname ? [O/n] ? " hostname_conf_choice
+read -p "Voulez-vous changer le hostname ou fullname ? [O/n] ? " hostname_conf_choice
   if [[ "$hostname_conf_choice" = O ]]; 
   then 
     read -p "Nom du serveur (ex: tatooine) : " server_name
@@ -80,9 +80,9 @@ read -p "Do you want to change the the hostname or fullname ? [O/n] ? " hostname
 
     export server_name=$server_name
     export dns=$dns
-    export fqdn=$server_name.$dns
-    export admin_email=$admin_email
+    export fqdn=$fqdn
     export server_email=$server_email
+    export admin_email=$admin_email
     export ActualFullHostname=$(hostname -f)
 
 
@@ -98,8 +98,10 @@ read -p "Do you want to change the the hostname or fullname ? [O/n] ? " hostname
         cp /etc/hosts /etc/hosts.SAVE
       fi
 
-    sed -i -e 's/'"$ActualFullHostname"'/'"$fqdn"'/' '/etc/hosts'
-    sed -i -e 's/'"$ActualServerName"'/'"$server_name"'/' '/etc/hosts'
+	sudo hostnamectl set-hostname --static $fqdn
+
+#      sed -i -e 's/'"$ActualFullHostname"'/'"$fqdn"'/' '/etc/hosts'
+#    sed -i -e 's/'"$ActualServerName"'/'"$server_name"'/' '/etc/hosts'
     hostname -F /etc/hostname
   
   else
@@ -187,7 +189,7 @@ read -p "Voulez-vous installer Vim [O/n] ? " vim_choice
   fi
 
 echo ""
-read -p "Voulez-vous configurer SSH Server [O/n] ? " ssh_choice
+read -p "Voulez-vous installer SSH Server [O/n] ? " ssh_choice
   if [[ "$ssh_choice" = 'O' ]]; then
         cd $script_PWD/ssh/ && ./install_ssh.sh
   fi
