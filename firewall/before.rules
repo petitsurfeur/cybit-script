@@ -80,5 +80,8 @@
 # is uncommented)
 -A ufw-before-input -p udp -d 239.255.255.250 --dport 1900 -j ACCEPT
 
+# ATTENTION !! Autorise tout ce qui vient de ROOT !! ATTENTION
+# -A ufw-before-output -m owner --uid-owner root -j ACCEPT
+
 # don't delete the 'COMMIT' line or these rules won't be processed
 COMMIT
