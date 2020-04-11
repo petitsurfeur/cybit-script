@@ -7,7 +7,7 @@ NOCOLOR="\033[0m"
 set -e
 
 echo ""
-echo -e " ${GREEN}### Installation de MariaDB, Nginx et Php-7.2${NOCOLOR}"
+echo -e " ${GREEN}### Installation de MariaDB, Nginx et Php-7.X${NOCOLOR}"
 echo ""
 
 
