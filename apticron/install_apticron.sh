@@ -34,10 +34,10 @@ cat << 'EOF' > /etc/cron.d/apticron
 40 17 * * * root if test -x /usr/sbin/apticron; then /usr/sbin/apticron --cron; else true; fi
 EOF
 
-echo ""
-echo -e " ${green}### Execution d'Apticron et envoi d'un mail${NOCOLOR}"
-echo -e "${RED}### ATTENDRE 20 sec${NOCOLOR}"
-systemctl restart exim4.service
-apticron
-sleep 20
-tail -20 /var/log/exim4/mainlog
+#echo ""
+#echo -e " ${green}### Execution d'Apticron et envoi d'un mail${NOCOLOR}"
+#echo -e "${RED}### ATTENDRE 20 sec${NOCOLOR}"
+#systemctl restart exim4.service
+#apticron
+#sleep 20
+#tail -20 /var/log/exim4/mainlog
