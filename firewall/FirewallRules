@@ -9,25 +9,25 @@ ufw default deny incoming
 ufw default deny outgoing
 
 ### SSH
-ufw allow in 2022/tcp
-ufw allow out 22,2022/tcp
+ufw allow in 2022/tcp comment 'SSH IN'
+ufw allow out 22,2022/tcp comment 'SSH OUT'
 #ufw allow in 22/tcp
 
 ### DNS (port 53)
-ufw allow out domain/udp
+ufw allow out domain/udp comment 'DNS'
 
 ### NTP (port 123)
-ufw allow out ntp/udp
+ufw allow out ntp/udp comment 'NTP'
 
 ### WHOIS (port 43)
-ufw allow out whois/tcp
+ufw allow out whois/tcp comment 'WHOIS'
 
 
 ##############################
 ##        VM / CT           ##
 ##############################
 
-ufw allow in 2122/tcp
+#ufw allow in 2122/tcp
 
 
 ##############################
@@ -35,21 +35,21 @@ ufw allow in 2122/tcp
 ##############################
 
 ### HTTP / HTTPS
-ufw allow out 80,443/tcp
-ufw allow in 80,443/tcp
+ufw allow out 80,443/tcp comment 'HTTP/HTTPS OUT'
+ufw allow in 80,443/tcp comment 'HTTP/HTTPS IN'
 
 ### Proxmox
-ufw allow in 8006/tcp
+#ufw allow in 8006/tcp comment 'PROXMOX'
 
 ### FTP
-#ufw allow in 2121/tcp
-ufw allow in 48000:49000/tcp
+#ufw allow in 2121/tcp comment 'FTP'
+#ufw allow in 48000:49000/tcp
 
 ##############################
 ##           MAIL           ##
 ##############################
 
-ufw allow out smtp/tcp
+ufw allow out smtp/tcp comment 'SMTP'
 
 
 ##############################
@@ -57,7 +57,7 @@ ufw allow out smtp/tcp
 ##############################
 
 ### gpg Server (apt-key adv --keyserver)
-ufw allow out 11371/tcp
+#ufw allow out 11371/tcp
 
 ### Monip
 #ufw allow in 1337/tcp
@@ -91,8 +91,8 @@ ufw allow out 11371/tcp
 #ufw allow in 19999/tcp
 
 ### iPerf
-ufw allow out 5001/tcp
-ufw allow in 5001/tcp
+#ufw allow out 5001/tcp comment 'iPerf'
+#ufw allow in 5001/tcp comment 'iPerf'
 
 ##### FIN #####
 
