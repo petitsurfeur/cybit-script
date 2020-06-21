@@ -9,25 +9,25 @@ ufw default deny incoming
 ufw default deny outgoing
 
 ### SSH
-ufw allow in 2022/tcp
-ufw allow out 22,2022/tcp
+ufw allow in 2022/tcp comment 'SSH IN'
+ufw allow out 22,2022/tcp comment 'SSH OUT'
 #ufw allow in 22/tcp
 
 ### DNS (port 53)
-ufw allow out domain/udp
+ufw allow out domain/udp comment 'DNS'
 
 ### NTP (port 123)
-ufw allow out ntp/udp
+ufw allow out ntp/udp comment 'NTP'
 
 ### WHOIS (port 43)
-ufw allow out whois/tcp
+ufw allow out whois/tcp comment 'WHOIS'
 
 
 ##############################
 ##        VM / CT           ##
 ##############################
 
-ufw allow in 2122/tcp
+#ufw allow in 2122/tcp
 
 
 ##############################
@@ -35,21 +35,21 @@ ufw allow in 2122/tcp
 ##############################
 
 ### HTTP / HTTPS
-ufw allow out 80,443/tcp
-ufw allow in 80,443/tcp
+ufw allow out 80,443/tcp comment 'HTTP/HTTPS OUT'
+ufw allow in 80,443/tcp comment 'HTTP/HTTPS IN'
 
 ### Proxmox
-ufw allow in 8006/tcp
+#ufw allow in 8006/tcp comment 'PROXMOX PANEL'
 
 ### FTP
-#ufw allow in 2121/tcp
-ufw allow in 48000:49000/tcp
+#ufw allow in 2121/tcp comment 'FTP'
+#ufw allow in 48000:49000/tcp
 
 ##############################
 ##           MAIL           ##
 ##############################
 
-ufw allow out smtp/tcp
+ufw allow out smtp/tcp comment 'SMTP'
 
 
 ##############################
@@ -59,11 +59,41 @@ ufw allow out smtp/tcp
 ### gpg Server (apt-key adv --keyserver)
 ufw allow out 11371/tcp
 
+### Airsonic 
+#ufw allow in 4040/tcp comment 'AIRSONIC'
+
+### SMB
+#ufw allow out 445,139/tcp comment 'SMB'
+
+### Jeedom
+#ufw allow from 192.168.50.0/24
+#ufw allow to 192.168.50.0/24
+#ufw allow to 192.168.50.254
+#ufw allow to 224.0.0.0/24
+#ufw allow out 7/udp comment 'WOL' # WakeOnLan
+
+#ufw allow out 55443/tcp comment 'IPCAM XIAOMI' #Pour ipcam-02 XIAOMI
+
+#ufw allow out 80/udp comment 'Broadlink RM PRO' #Broadlink
+
+#ufw allow to 224.0.0.50
+#ufw allow to 192.168.50.21 # yeelink-01
+#ufw allow to 192.168.50.22 # rm-pro
+#ufw allow out 9898/udp
+
+### Bridge to Telegraf
+#ufw allow out 8086/tcp
+
+### EPG
+#ufw allow out 8000/tcp # EPG
+
+
+
 ### Monip
-#ufw allow in 1337/tcp
+#ufw allow in 1337/tcp comment 'MONIT'
 
 ### Webmin
-#ufw allow in 10022/tcp
+#ufw allow in 10022/tcp comment 'Webmin'
 
 ### Autoriser IP specifique
 # ufw allow from 192.168.50.12
@@ -72,10 +102,10 @@ ufw allow out 11371/tcp
 #ufw allow from 192.168.50.12 to any port 22 proto tcp
 
 ### SQUID
-#ufw allow in 8888/tcp
+#ufw allow in 8888/tcp comment 'SQUID'
 
 ### OpenVPN
-#ufw allow in openvpn/tcp
+#ufw allow in openvpn/tcp comment 'OPENVPN'
 
 ### rTorrent / ruTorrent
 #ufw allow out 53/tcp
@@ -88,11 +118,11 @@ ufw allow out 11371/tcp
 #ufw allow 6880:6999/udp
 
 ### Netdata
-#ufw allow in 19999/tcp
+#ufw allow in 19999/tcp comment 'NETDATA'
 
 ### iPerf
-ufw allow out 5001/tcp
-ufw allow in 5001/tcp
+#ufw allow out 5001/tcp comment 'iPerf OUT'
+#ufw allow in 5001/tcp comment 'iPerf IN'
 
 ##### FIN #####
 
