@@ -59,11 +59,44 @@ ufw allow out smtp/tcp comment 'SMTP'
 ### gpg Server (apt-key adv --keyserver)
 #ufw allow out 11371/tcp
 
+### InfluxDB
+#ufw allow in 8086/tcp comment 'INFLUXDB'
+
+### Grafana
+#ufw allow out 3000/tcp comment 'GRAFANA'
+
+### Bridge Jeedom to Telegraf
+#ufw allow out 8086/tcp comment 'TELEGRAF'
+
+
+### Jeedom
+#ufw allow from 192.168.50.0/24
+#ufw allow to 192.168.50.0/24
+#ufw allow to 192.168.50.254
+#ufw allow to 224.0.0.0/24
+#ufw allow out 7/udp comment 'WOL' # WakeOnLan
+
+#ufw allow out 55443/tcp comment 'IPCAM XIAOMI'  #Pour ipcam-02 XIAOMI
+
+#ufw allow out 80/udp comment 'BROADLINK RMPRO'  #Broadlink
+#ufw allow to 51.15.150.200
+#ufw allow from 51.15.150.200
+
+#ufw allow to 224.0.0.50 
+#ufw allow to 192.168.50.21 comment 'YEELIGHT'  # yeelight-01
+#ufw allow to 192.168.50.22 comment 'RMPRO'  # rm-pro
+#ufw allow out 9898/udp
+
+
+### EPG
+#ufw allow out 8000/tcp comment 'EPG' # EPG
+
+
 ### Monip
-#ufw allow in 1337/tcp
+#ufw allow in 1337/tcp comment 'Monip'
 
 ### Webmin
-#ufw allow in 10022/tcp
+#ufw allow in 10022/tcp comment 'WEBMIN'
 
 ### Autoriser IP specifique
 # ufw allow from 192.168.50.12
@@ -72,10 +105,10 @@ ufw allow out smtp/tcp comment 'SMTP'
 #ufw allow from 192.168.50.12 to any port 22 proto tcp
 
 ### SQUID
-#ufw allow in 8888/tcp
+#ufw allow in 8888/tcp comment 'SQUID'
 
 ### OpenVPN
-#ufw allow in openvpn/tcp
+#ufw allow in openvpn/tcp comment 'OPENVPN'
 
 ### rTorrent / ruTorrent
 #ufw allow out 53/tcp
@@ -88,11 +121,11 @@ ufw allow out smtp/tcp comment 'SMTP'
 #ufw allow 6880:6999/udp
 
 ### Netdata
-#ufw allow in 19999/tcp
+#ufw allow in 19999/tcp comment 'NETDATA'
 
 ### iPerf
-#ufw allow out 5001/tcp comment 'iPerf'
-#ufw allow in 5001/tcp comment 'iPerf'
+#ufw allow out 5001/tcp comment 'iPerf OUT'
+#ufw allow in 5001/tcp comment 'iPerf IN'
 
 ##### FIN #####
 
