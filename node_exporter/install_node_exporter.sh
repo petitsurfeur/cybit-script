@@ -20,7 +20,8 @@ chown node_exporter:node_exporter /usr/local/bin/node_exporter
 
 
 echo -e "${GREEN}### Creation du service${NOCOLOR}"
-cp node_exporter.service /etc/systemd/system/node_exporter.service
+cd.. && cp node_exporter.service /etc/systemd/system/node_exporter.service
+rm node_exporter-1.0.1.linux-amd64.tar.gz node_exporter-1.0.1.linux-amd64/ -R
 
 echo -e "${GREEN}### Activation du service${NOCOLOR}"
 systemctl daemon-reload
