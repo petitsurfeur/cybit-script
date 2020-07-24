@@ -194,11 +194,12 @@ read -p "Voulez-vous installer SSH Server [O/n] ? " ssh_choice
         cd $script_PWD/ssh/ && ./install_ssh.sh
   fi
 
-echo ""
-read -p "Voulez-vous configurer .bashrc [O/n] ? " bashrc_choice
-  if [[ "$bashrc_choice" = 'O' ]]; then
-        cd $script_PWD/bashrc && ./install_bashrc.sh
-  fi
+### Deprecated with Ubuntu and ZSH
+#echo ""
+#read -p "Voulez-vous configurer .bashrc [O/n] ? " bashrc_choice
+#  if [[ "$bashrc_choice" = 'O' ]]; then
+#        cd $script_PWD/bashrc && ./install_bashrc.sh
+#  fi
 
 echo ""
 read -p "Voulez-vous installer Exim4 [O/n] ? " exim4_choice
