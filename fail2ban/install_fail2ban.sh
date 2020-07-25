@@ -44,8 +44,8 @@ cp filter.d/* /etc/fail2ban/filter.d/
 
 echo ""
 echo -e "${GREEN}### Redemarrage de Fail2Ban${NOCOLOR}"
-systemctl stop fail2ban.service
-systemctl start fail2ban.service
+systemctl restart fail2ban.service
+sleep 5
 fail2ban-client status
 
 echo ""
