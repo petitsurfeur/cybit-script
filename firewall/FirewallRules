@@ -56,14 +56,32 @@ ufw allow out smtp/tcp comment 'SMTP'
 ##          AUTRES          ##
 ##############################
 
+### Airsonic
+#ufw allow in 4040/tcp comment 'AIRSONIC'
+
+### SMB
+#ufw allow out 445,139/tcp comment 'SMB'
+
+### Node_Exporter
+#ufw allow out 9100/tcp comment 'Node_Exporter OUT'
+#ufw allow in 9100/tcp comment 'Node_Exporter IN'
+
+### Prometheus
+#ufw allow in 9090/tcp comment 'PROMETHEUS'
+
+### Grafana
+#ufw allow in 3000/tcp comment 'GRAFANA'
+
+### cAdvisor (stats des containers)
+#ufw allow in 8080/tcp comment 'cAvisor'
+
+### InfluxDB
+#ufw allow in 8086/tcp comment 'InfluxDB'
+
+
 ### gpg Server (apt-key adv --keyserver)
 #ufw allow out 11371/tcp
 
-### InfluxDB
-#ufw allow in 8086/tcp comment 'INFLUXDB'
-
-### Grafana
-#ufw allow out 3000/tcp comment 'GRAFANA'
 
 ### Bridge Jeedom to Telegraf
 #ufw allow out 8086/tcp comment 'TELEGRAF'
