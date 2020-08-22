@@ -23,9 +23,14 @@ fi
 
 echo ""
 echo -e "${GREEN}### Copie du fichier resolv.conf${NOCOLOR}"
+echo -e "${GREEN}### Serveurs DNS OpenDNS${NOCOLOR}"
+if [ ! -f /etc/resolv.conf.SAVE ]; then
+ cp /etc/resolv.conf /etc/resolv.conf.SAVE
+fi
+
 cat << 'EOF' > /etc/resolv.conf
 nameserver 127.0.0.1
-nameserver 185.121.177.177
-nameserver 169.237.202.202
+nameserver 208.67.222.222
+nameserver 208.67.220.222
 EOF
 

@@ -128,10 +128,10 @@ logpath = /var/log/kern.log
 #logpath = /var/log/daemon.log
 
 
-[exim]
-enabled  = true
-port = 25,587
-filter = exim
-logpath = /var/log/exim4/mainlog
+#[exim]
+#enabled  = true
+#port = 25,587
+#filter = exim
+#logpath = /var/log/exim4/mainlog
 
 

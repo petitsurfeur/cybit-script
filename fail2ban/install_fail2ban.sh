@@ -6,8 +6,8 @@ NOCOLOR="\033[0m"
 
 set -e
 
-#read -p "Email du destinataire (admin@xx.xx) : " dest_email
-#read -p "Email de l'expediteur : " sender_email
+read -p "Email de l'expediteur : " sender_email
+read -p "Email du destinataire (admin@xx.xx) : " dest_email
 read -p "Machines a Whitelister (separer les IP par des espaces) : " whitelist
 
 
@@ -44,8 +44,8 @@ cp filter.d/* /etc/fail2ban/filter.d/
 
 echo ""
 echo -e "${GREEN}### Redemarrage de Fail2Ban${NOCOLOR}"
-systemctl stop fail2ban.service
-systemctl start fail2ban.service
+systemctl restart fail2ban.service
+sleep 5
 fail2ban-client status
 
 echo ""
