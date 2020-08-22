@@ -40,9 +40,9 @@ if [[ "$ssh_configure_choice" = 'O'  ]]; then
 
   if [ ! -d /etc/ssh/sshd_config.d ]; then
     mkdir /etc/ssh/sshd_config.d/
-    cp sshd_config /etc/ssh/ $$ cp ubuntu.conf /etc/ssh/sshd_config.d/
+    cp sshd_config /etc/ssh/ && cp ubuntu.conf /etc/ssh/sshd_config.d/
   else
-    cp sshd_config /etc/ssh/ $$ cp ubuntu.conf /etc/ssh/sshd_config.d/
+    cp sshd_config /etc/ssh/ && cp ubuntu.conf /etc/ssh/sshd_config.d/
   fi
 
   read -p "Port a utiliser pour le serveur SSH (ex: 2022): " ssh_port
@@ -51,7 +51,7 @@ if [[ "$ssh_configure_choice" = 'O'  ]]; then
   read -p "Voulez-vous ajouter votre cle privee dans le fichier /home/$ssh_user/.ssh/authorized_keys [O/n] ? " copy_priv_key_choice
   if [[ "$copy_priv_key_choice" = 'O' ]]; then
     read -p "Collez ici la cle privee: " private_key
-    cat $private_key >> /home/$ssh_user/.ssh/authorized_keys
+    echo $private_key >> /home/$ssh_user/.ssh/authorized_keys
   fi
 
   echo ""
