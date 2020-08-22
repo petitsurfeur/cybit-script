@@ -20,15 +20,6 @@ then
   exit
 fi
 
-cp sshd_config /etc/ssh/
-
-if [ ! -d /etc/ssh/sshd_config.d ]; then
-  mkdir /etc/ssh/sshd_config.d/
-  cp ubuntu.conf /etc/ssh/sshd_config.d/
-else
-  cp ubuntu.conf /etc/ssh/sshd_config.d/
-fi
-
 
 echo ""
 read -p "Faut-il creer une paire de cle publique/privee de type ED25519 [O/n] ? " keyED25519_create
@@ -44,11 +35,24 @@ fi
 
 
 echo ""
-read -p "Voulez-vous configurer le serveur SSH [O/n] ? " ssh_configure
-if [[ "$ssh_configure" = 'O'  ]]; then
+read -p "Voulez-vous configurer le serveur SSH [O/n] ? " ssh_configure_choice
+if [[ "$ssh_configure_choice" = 'O'  ]]; then
+
+  if [ ! -d /etc/ssh/sshd_config.d ]; then
+    mkdir /etc/ssh/sshd_config.d/
+    cp sshd_config /etc/ssh/ $$ cp ubuntu.conf /etc/ssh/sshd_config.d/
+  else
+    cp sshd_config /etc/ssh/ $$ cp ubuntu.conf /etc/ssh/sshd_config.d/
+  fi
 
   read -p "Port a utiliser pour le serveur SSH (ex: 2022): " ssh_port
   read -p "Utilisateur a autoriser pour les connexions SSH: " ssh_user
+
+  read -p "Voulez-vous ajouter votre cle privee dans le fichier /home/$ssh_user/.ssh/authorized_keys [O/n] ? " copy_priv_key_choice
+  if [[ "$copy_priv_key_choice" = 'O' ]]; then
+    read -p "Collez ici la cle privee: " private_key
+    cat $private_key >> /home/$ssh_user/.ssh/authorized_keys
+  fi
 
   echo ""
   echo -e "${GREEN}### Configuration du fichier /etc/ssh/sshd_config.d/ubuntu.conf${NOCOLOR}"
