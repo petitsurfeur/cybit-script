@@ -27,7 +27,7 @@ while true; do
 
         if [ ! -f /etc/nginx/conf.d/default.conf.SAVE ]; then
           mv /etc/nginx/conf.d/default.conf /etc/nginx/conf.d/default.conf.SAVE
-          cp default.conf /etc/nginx/conf.d/
+          cp default.conf.template /etc/nginx/conf.d/
         fi
 
 #        sed -i "s/server_name XXX.COM;/server_name $url_server_choice;/" /etc/nginx/sites-available/default
