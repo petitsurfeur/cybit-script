@@ -187,15 +187,15 @@ while true; do
     [Oo]* )
       echo ""
       echo -e " ${GREEN}### Installation de Phpmyadmin${NOCOLOR}"
-#      apt install phpmyadmin --yes
-#      cp phpmyadmin.conf /etc/nginx/conf.d/
-      cd /tmp/
-      wget https://www.phpmyadmin.net/downloads/phpMyAdmin-latest-all-languages.tar.gz
-read -p "Quelle est l'URL du serveur (ex: www.petitsurfeur.net) ? " url_server_choice
-      sed -i "s/server_name pma.example.com;/server_name $url_server_choice;/" /etc/nginx/conf.d/phpmyadmin.conf
-      echo ""
+      apt install phpmyadmin --yes
+      cp phpmyadmin.conf.template /etc/nginx/conf.d/
+#      cd /tmp/
+#      wget https://www.phpmyadmin.net/downloads/phpMyAdmin-latest-all-languages.tar.gz
+#read -p "Quelle est l'URL du serveur (ex: www.petitsurfeur.net) ? " url_server_choice
+#      sed -i "s/server_name pma.example.com;/server_name $url_server_choice;/" /etc/nginx/conf.d/phpmyadmin.conf
+#      echo ""
       nginx -t
-      systemctl restart nginx.service
+#      systemctl restart nginx.service
       break ;;
     [Nn]* ) break ;;
   esac
