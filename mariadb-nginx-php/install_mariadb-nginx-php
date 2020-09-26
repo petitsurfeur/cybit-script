@@ -21,7 +21,7 @@ while true; do
         #read -p "Quelle est l'URL du serveur (ex: www.petitsurfeur.net) ? " url_server_choice
 #        apt install nginx --yes
         wget http://nginx.org/keys/nginx_signing.key && apt-key add nginx_signing.key && rm nginx_signing.key
-        sh -c 'echo "deb http://nginx.org/packages/debian/ stretch nginx" > /etc/apt/sources.list.d/nginx.list'
+        sh -c 'echo "deb http://nginx.org/packages/ubuntu/ $(lsb_release -sc) nginx" > /etc/apt/sources.list.d/nginx.list'
 	apt update
 	apt install nginx
 
@@ -47,7 +47,7 @@ while true; do
       echo -e " ${GREEN}### Installation de PHP-7.1${NOCOLOR}"
 	apt install apt-transport-https ca-certificates --yes
 	wget -O /etc/apt/trusted.gpg.d/php.gpg https://packages.sury.org/php/apt.gpg
-	sh -c 'echo "deb https://packages.sury.org/php/ stretch main" > /etc/apt/sources.list.d/php.list'
+	sh -c 'echo "deb https://packages.sury.org/php/ $(lsb_release -sc) main" > /etc/apt/sources.list.d/php.list'
 	apt update
         apt install php7.1-apcu php7.1-bcmath php7.1-cli php7.1-curl php7.1-fpm php7.1-gd php7.1-intl php7.1-mcrypt php7.1-mysql php7.1-soap php7.1-xml php7.1-zip --yes
 	
@@ -167,8 +167,10 @@ while true; do
       sudo apt-key adv --recv-keys --keyserver hkp://keyserver.ubuntu.com:80 0xF1656F24C74CD1D8
 #      apt-key adv --recv-keys --keyserver keyserver.ubuntu.com 0xF1656F24C74CD1D8
      # add-apt-repository 'deb [arch=amd64,i386,ppc64el] http://mariadb.mirrors.ovh.net/MariaDB/repo/10.3/debian stretch main'
-      sudo add-apt-repository 'deb [arch=amd64,i386,ppc64el] http://mirrors.dotsrc.org/mariadb/repo/10.4/debian stretch main'
-      apt update
+     #sudo add-apt-repository 'deb http://mirrors.dotsrc.org/mariadb/repo/10.5/ubuntu $(lsb_release -sc) main'
+#     sudo add-apt-repository 'deb [arch=amd64,arm64,ppc64el] http://mirror.lstn.net/mariadb/repo/10.5/ubuntu focal main'
+      sh -c 'echo "deb [arch=amd64,arm64,ppc64el] http://mirror.lstn.net/mariadb/repo/10.5/ubuntu focal main" > /etc/apt/sources.list.d/mariadb.list'
+     apt update
       apt install mariadb-server mariadb-client --yes
       echo ""
       echo -e " ${GREEN}### Securisation de MariaDB${NOCOLOR}"
