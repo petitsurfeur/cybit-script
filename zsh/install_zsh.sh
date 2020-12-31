@@ -84,10 +84,10 @@ fi
 
 if [ -d ~/.quickzsh/fzf ]; then
     cd ~/.quickzsh/fzf && git pull
-    ~/.quickzsh/fzf/install --all --key-bindings --completion --no-update-rc --64
+    ~/.quickzsh/fzf/install --all --key-bindings --completion --no-update-rc #--64
 else
     git clone --depth 1 https://github.com/junegunn/fzf.git ~/.quickzsh/fzf
-    ~/.quickzsh/fzf/install --all --key-bindings --completion --no-update-rc --64
+    ~/.quickzsh/fzf/install --all --key-bindings --completion --no-update-rc #--64
 fi
 
 if [ -d ~/.oh-my-zsh/custom/plugins/k ]; then
