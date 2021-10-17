@@ -27,11 +27,13 @@ echo -e "${GREEN}--> Modification du fichier /usr/share/vim/vim81/defaults.vim${
   if [ -f /usr/share/vim/vim81/defaults.vim ]; then
     cp /usr/share/vim/vim81/defaults.vim /usr/share/vim/vim81/defaults.vim.SAVE
     sed -i -e 's|set mouse=a|"set mouse=a|' '/usr/share/vim/vim81/defaults.vim'
+    echo -e "Fichier defaults.vim mis a jour dans /usr/share/vim/vim81"
   else echo -e "Fichier defaults.vim dans /usr/share/vim/vim81 absent"
   fi
 
-  if [ -f /usr/share/vim/vim81/defaults.vim ]; then
-    cp /usr/share/vim/vim81/defaults.vim /usr/share/vim/vim81/defaults.vim.SAVE
-    sed -i -e 's|set mouse=a|"set mouse=a|' '/usr/share/vim/vim81/defaults.vim'
-  else echo -e "Fichier defaults.vim /usr/share/vim/vim81 absent"
+  if [ -f /usr/share/vim/vim82/defaults.vim ]; then
+    cp /usr/share/vim/vim82/defaults.vim /usr/share/vim/vim82/defaults.vim.SAVE
+    sed -i -e 's|set mouse=a|"set mouse=a|' '/usr/share/vim/vim82/defaults.vim'
+    echo -e "Fichier defaults.vim mis a jour dans /usr/share/vim/vim82"
+  else echo -e "Fichier defaults.vim /usr/share/vim/vim82 absent"
   fi
