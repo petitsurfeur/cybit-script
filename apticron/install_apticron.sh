@@ -19,6 +19,15 @@ if [ ! -f /etc/apticron/apticron.conf.SAVE ]; then
  cp /etc/apticron/apticron.conf /etc/apticron/apticron.conf.SAVE
 fi
 
+if [ -z ${admin_email+x} ]; then
+  read -p "Email du destinataire (admin@xxx.xx) : " admin_email
+fi
+
+if [ -z ${server_email+x} ]; then
+  read -p "Email du serveur (srv-xx@xx.net) : " server_email
+
+fi
+
 
 echo ""
 echo -e " ${GREEN}### Parametrage du fichier de Conf${NOCOLOR}"
