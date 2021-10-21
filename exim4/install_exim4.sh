@@ -13,6 +13,12 @@ set -e
 echo -e "${GREEN}### Installation d'Exim4 ###${NOCOLOR}"
 apt install -y exim4
 
+
+echo -e "${GREEN}### Configuration d'Exim4 ###${NOCOLOR}"
+echo -e "repondre 1 / cyb.pw / N/A / N/A / N/A / admin@cybtech.net "
+dpkg-reconfigure exim4-config
+
+
   if [ ! -f /etc/aliases.SAVE ]; then
     cp /etc/aliases /etc/aliases.SAVE
 #   sed -i -e 's/^#*: root/: '"$root_email"'/' '/etc/aliases'
