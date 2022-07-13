@@ -52,6 +52,8 @@ if [[ "$regenerate_keys" = 'O' ]]; then
   ### Generer cles client
   if [ -d /home/$ssh_user/.ssh/ ]; then
     rm /home/$ssh_user/.ssh/*
+  else
+    mkdir /home/$ssh_user/.ssh
   fi
   ssh-keygen -o -a 100 -b 521 -t ed25519 -f /home/$ssh_user/.ssh/id_ed25519 -C "ed25519-key_$ActualServerName_$(date +%Y-%m-%d)"
   chown $ssh_user:$ssh_user /home/$ssh_user/.ssh/*
