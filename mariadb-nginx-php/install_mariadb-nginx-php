@@ -185,6 +185,36 @@ while true; do
   esac
 done
 
+while true; do
+  echo ""
+  read -p "Voulez-vous installer PHP-8.1 [O/n] ? " php81_choice
+  case $php81_choice in
+    [Oo]* )
+      echo -e " ${GREEN}### Installation de PHP-8.1${NOCOLOR}"
+#      apt install apt-transport-https lsb-release ca-certificates --yes
+      add-apt-repository ppa:ondrej/php
+      apt update
+
+        sudo apt install php8.1-fpm php8.1-common php8.1-mysql php8.1-gmp php8.1-curl php8.1-intl php8.1-mbstring php8.1-xmlrpc php8.1-gd php8.1-xml php8.1-cli php8.1-zip -y
+      echo ""
+      read -p "Voulez-vous configurer Nginx (memory_limit, upload_max,...) dans /etc/php/8.1/fpm/php.ini [O/n]
+? " php81_config_choice
+        if [[ "$php74_config_choice" = 'O' ]]; then
+          cp /etc/php/8.1/fpm/php.ini /etc/php/8.1/fpm/php.ini.SAVE
+          sudo sed -i "s/memory_limit = .*/memory_limit = 256M/" /etc/php/8.1/fpm/php.ini
+          sudo sed -i "s/upload_max_filesize = .*/upload_max_filesize = 128M/" /etc/php/8.1/fpm/php.ini
+          sudo sed -i "s/zlib.output_compression = .*/zlib.output_compression = on/" /etc/php/8.1/fpm/php.ini
+          sudo sed -i "s/max_execution_time = .*/max_execution_time = 18000/" /etc/php/8.1/fpm/php.ini
+          nginx -t
+          sudo systemctl restart nginx.service php8.1-fpm.service
+        fi
+      break ;;
+    [Nn]* ) break ;;
+  esac
+done
+
+
+
 
 while true; do
   read -p "Voulez-vous installer MariaDB [O/n] ? " mariadb_choice
@@ -197,7 +227,7 @@ while true; do
      # add-apt-repository 'deb [arch=amd64,i386,ppc64el] http://mariadb.mirrors.ovh.net/MariaDB/repo/10.3/debian stretch main'
      #sudo add-apt-repository 'deb http://mirrors.dotsrc.org/mariadb/repo/10.5/ubuntu $(lsb_release -sc) main'
 #     sudo add-apt-repository 'deb [arch=amd64,arm64,ppc64el] http://mirror.lstn.net/mariadb/repo/10.5/ubuntu focal main'
-      sh -c 'echo "deb [arch=amd64,arm64,ppc64el] http://mirror.lstn.net/mariadb/repo/10.5/ubuntu focal main" > /etc/apt/sources.list.d/mariadb.list'
+      sh -c 'echo "deb [arch=amd64,arm64,ppc64el] http://mirror.lstn.net/mariadb/repo/10.10.2/ubuntu $(lsb_release -sc) main" > /etc/apt/sources.list.d/mariadb.list'
      apt update
       apt install mariadb-server mariadb-client --yes
       echo ""
@@ -218,9 +248,14 @@ while true; do
       echo ""
       echo -e " ${GREEN}### Installation de Phpmyadmin${NOCOLOR}"
       apt install phpmyadmin --yes
-      cp phpmyadmin.conf.template /etc/nginx/conf.d/
+      cp phpmyadmin.conf.template /etc/nginx/conf.d/phpmyadmin.conf
 #      cd /tmp/
 #      wget https://www.phpmyadmin.net/downloads/phpMyAdmin-latest-all-languages.tar.gz
+      if [ -d /var/www ]; then
+	mkdir /var/www
+      fi
+      cd /var/www
+      tar zxvf /tmp/phpMyAdmin-latest-all-languages.tar.gz
 #read -p "Quelle est l'URL du serveur (ex: www.petitsurfeur.net) ? " url_server_choice
 #      sed -i "s/server_name pma.example.com;/server_name $url_server_choice;/" /etc/nginx/conf.d/phpmyadmin.conf
 #      echo ""

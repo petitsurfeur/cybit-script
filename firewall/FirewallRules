@@ -127,6 +127,7 @@ ufw allow out smtp/tcp comment 'SMTP'
 
 ### OpenVPN
 #ufw allow in openvpn/tcp comment 'OPENVPN'
+#ufw allow from 127.0.0.1 to 127.0.0.1 port 6666 proto tcp comment 'comment OpenVPN Status'
 
 ### rTorrent / ruTorrent
 #ufw allow out 53/tcp
