@@ -48,6 +48,18 @@ fi
   export script_PWD=$PWD
 
 
+# Ajouter infos actuels dans banner
+
+ActualIP=$(ifconfig | grep inet | grep broadcast)
+
+echo -e ""
+echo -e "**********************************************"
+echo -e "--> Actuellement le nom de machine est "${RED}$(hostname -s)${NOCOLOR}""
+echo -e "--> Son IP est "${RED}$ActualIP}${NOCOLOR}""
+echo -e "**********************************************"
+echo -e ""
+
+
 echo ""
 header "###         System Update                 ###"
   read -p "Voulez-vous mettre a jour le systeme [O/n] ? " upgrade_choice

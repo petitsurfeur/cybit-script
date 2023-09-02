@@ -12,9 +12,6 @@ echo -e "${GREEN}### Installation de Openssh-server${NOCOLOR}"
 sshd_conf=/etc/ssh/sshd_config
 ubuntu_conf=/etc/ssh/sshd_config.d/ubuntu.conf
 
-read -p "Port a utiliser pour le serveur SSH (ex: 2022): " ssh_port
-read -p "Utilisateur a autoriser pour les connexions SSH (ex: $user_add :) " ssh_user
-
 apt install -y openssh-server
 
 if [ ! -f /etc/ssh/sshd_config.ORIGINAL ]; then
@@ -22,13 +19,27 @@ if [ ! -f /etc/ssh/sshd_config.ORIGINAL ]; then
 fi
 
 echo ""
+read -p "Port a utiliser pour le serveur SSH (ex: 2022): " ssh_port
+read -p "Utilisateur a autoriser pour les connexions SSH (ex: $user_add :) " ssh_user
+
+echo ""
 read -p "Voulez-vous configurer le serveur SSH [O/n] ? " ssh_configure
 if [[ "$ssh_configure" = 'O'  ]]; then
+
+  if [ ! -d /etc/ssh/sshd_config.d]; then
+    mkdir /etc/ssh/sshd_coonfig.d
+    cp ubuntu.conf /etc/ssh/sshd_config.d/
+    sed -i '/^Include /etc/ssh/sshd_config.d/d' /etc/ssh/sshd_config
+
+    cat << 'EOF' >> /etc/ssh/sshd_config
+    Include /etc/ssh/sshd_config.d/*.conf
+EOF
+  fi
 
   cp ubuntu.conf /etc/ssh/sshd_config.d/
   echo ""
 
-  echo -e "${GREEN}### Configuration du fichier /etc/ssh/sshd_config et ubuntu.conf${NOCOLOR}"
+  echo -e "${GREEN}### Configuration des fichiers /etc/ssh/sshd_config et ubuntu.conf${NOCOLOR}"
   sed -i 's/^UsePAM/#UsePAM/' $sshd_conf
   sed -i 's/^X11Forwarding/#UseForwarding/' $sshd_conf
   sed -i 's/^PrintMotd/#PrintMotd/' $sshd_conf
@@ -68,6 +79,10 @@ if [[ "$secure_ssh" = 'O' ]]; then
     touch /home/$ssh_user/.ssh/authorized_keys
     chown $ssh_user:$ssh_user /home/$ssh_user/.ssh/*
     echo -e "${RED}### Vous devez ajouter votre cle publique dans le fichier authorized_keys ${NOCOLOR}"
+
+    read -p "Collez votre cle publique SSH : " public_ssh_key
+    echo $public_ssh_key >> /home/$ssh_user/.ssh/authorized_keys
+
   fi
 
   sed -i 's/#AuthenticationMethods publickey/AuthenticationMethods publickey/' $ubuntu_conf
@@ -89,5 +104,5 @@ echo -e "${GREEN}--> Redemarrage du service${NOCOLOR}"
 systemctl restart sshd.service
 
 echo ""
-echo -e "${RED}### Penser a modifier le port SSH $ssh_port dans Putty${NOCOLOR}"
+echo -e "${RED}### Le Service a ete redemarre !! NE QUITTEZ PAS LA SESSION SSH ACTUELLE !!! Lancez une connexion SSH apres avoir modifier le port SSH $ssh_port dans Putty${NOCOLOR}"
 echo ""
