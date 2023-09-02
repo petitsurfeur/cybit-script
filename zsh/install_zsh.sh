@@ -160,6 +160,8 @@ echo -e "{$GREEN} Pour configurer le prompt, lancer 'p10k configure'{$NOCOLOR}"
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
 
+# Definir zsh par defaut
+chsh -s /bin/zsh
 
 
 

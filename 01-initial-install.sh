@@ -47,10 +47,10 @@ fi
 #header "###      Variables Definitions            ###"
   export script_PWD=$PWD
 
-
+clear
 # Ajouter infos actuels dans banner
 
-ActualIP=$(ifconfig | grep inet | grep broadcast)
+ActualIP=$(ip a | grep brd | grep inet)
 
 echo -e ""
 echo -e "**********************************************"
@@ -241,6 +241,13 @@ echo ""
 read -p "Voulez-vous installer OpenVPN [O/n] ? " openvpn_choice
   if [[ "$openvpn_choice" = 'O' ]]; then
          cd $script_PWD/openvpn && ./install_openvpn_server.sh
+  fi
+
+
+echo ""
+read -p "Voulez-vous installer Zsh [O/n] ? " zsh_choice
+  if [[ "$zsh_choice" = 'O' ]]; then
+         cd $script_PWD/zsh && ./install_zsh.sh
   fi
 
 
