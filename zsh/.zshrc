@@ -123,6 +123,10 @@ export LS_COLORS
 #
 #. /usr/share/powerline/bindings/zsh/powerline.zsh
 
+bindkey  "^[[1~"   beginning-of-line
+bindkey  "^[[4~"   end-of-line
+
+
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
