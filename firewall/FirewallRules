@@ -34,9 +34,13 @@ ufw allow out whois/tcp comment 'WHOIS'
 ##            WEB           ##
 ##############################
 
+
 ### HTTP / HTTPS
-ufw allow out 80,443/tcp comment 'HTTP/HTTPS OUT'
-ufw allow in 80,443/tcp comment 'HTTP/HTTPS IN'
+ufw allow out 80/tcp comment 'HTTP OUT'
+ufw allow out 443/tcp comment 'HTTPS OUT'
+
+ufw allow in 80/tcp comment 'HTTP IN'
+ufw allow in 443/tcp comment 'HTTPS IN'
 
 ### Proxmox
 #ufw allow in 8006/tcp comment 'PROXMOX'
@@ -45,11 +49,22 @@ ufw allow in 80,443/tcp comment 'HTTP/HTTPS IN'
 #ufw allow in 2121/tcp comment 'FTP'
 #ufw allow in 48000:49000/tcp
 
+
 ##############################
-##           MAIL           ##
+##      MAIL IN A BOX       ##
 ##############################
 
-ufw allow out smtp/tcp comment 'SMTP'
+#ufw allow in 53 comment 'DNS/53'
+#ufw allow in 25/tcp comment 'SMTP'
+#ufw allow in 465/tcp comment 'SMTPS SSL'
+#ufw allow in 587/tcp comment 'SMTPS STARTTLS'
+#ufw allow in 993/tcp comment 'IMAP'
+#ufw allow in 995/tcp comment 'POP'
+#ufw allow in 4190/tcp comment 'DOVECOT'
+
+#ufw allow out 25/tcp comment 'SMTP'
+#ufw allow out 465/tcp comment 'SMTPS'
+#ufw allow out 993/tcp comment 'IMAP'
 
 
 ##############################
