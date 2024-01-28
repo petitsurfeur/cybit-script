@@ -19,12 +19,11 @@ echo -e "${GREEN}--> Copie du fichier de configuration /etc/vim/vimrc.local${NOC
     rm /etc/vim/vimrc.tiny
   else echo -e "Fichier vimrc.tiny absent"
   fi
-    cp /etc/vim/vimrc /etc/vim/vimrc.SAVE
-    cp vimrc.local /etc/vim/
 
-echo ""
+  cp /etc/vim/vimrc /etc/vim/vimrc.SAVE
+  cp vimrc.local /etc/vim/
 
-:<< COMMENT
+
 
 echo -e "${GREEN}--> Modification du fichier /usr/share/vim/vim81/defaults.vim${NOCOLOR}"
   if [ -f /usr/share/vim/vim81/defaults.vim ]; then
@@ -40,4 +39,11 @@ echo -e "${GREEN}--> Modification du fichier /usr/share/vim/vim81/defaults.vim${
     echo -e "Fichier defaults.vim mis a jour dans /usr/share/vim/vim82"
   else echo -e "Fichier defaults.vim /usr/share/vim/vim82 absent"
   fi
-COMMENT
+
+  if [ -f /usr/share/vim/vim90/defaults.vim ]; then
+    cp /usr/share/vim/vim90/defaults.vim /usr/share/vim/vim90/defaults.vim.SAVE
+    sed -i -e 's|set mouse=a|"set mouse=a|' '/usr/share/vim/vim90/defaults.vim'
+    echo -e "Fichier defaults.vim mis a jour dans /usr/share/vim/vim90"
+  else echo -e "Fichier defaults.vim /usr/share/vim/vim90 absent"
+  fi
+
