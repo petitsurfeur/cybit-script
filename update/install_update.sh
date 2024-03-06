@@ -21,6 +21,19 @@ if [ ! -f /etc/cron.d/update ]; then
 EOF
 fi
 
+
+if [ ! -f /etc/cron.d/reboot ]; then
+  cat << 'EOF' > /etc/cron.d/reboot
+# cron entry for reboot
+# At 6:30 AM // Choose the day
+# MIN HOUR DAY MONTH
+30 06 13 14 * root systemctl reboot
+EOF
+fi
+
+
+
+
 echo ""
 echo -e "${GREEN}### Mise en place des DNS OPENDNS dans resolv.conf${NOCOLOR}"
 if [ ! -f /etc/resolv.conf.SAVE ]; then
