@@ -44,7 +44,7 @@ sed -i '/^nameserver/d' /etc/resolv.conf
 
 cat << 'EOF' >> /etc/resolv.conf
 nameserver 127.0.0.1
-nameserver 208.67.222.222
-nameserver 208.67.220.222
+nameserver 9.9.9.9
+nameserver 9.9.9.11
 EOF
 
