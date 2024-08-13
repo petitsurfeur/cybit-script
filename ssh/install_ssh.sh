@@ -24,17 +24,19 @@ read -p "Utilisateur a autoriser pour les connexions SSH (ex: $user_add :) " ssh
 
 echo ""
 read -p "Voulez-vous configurer le serveur SSH [O/n] ? " ssh_configure
-if [[ "$ssh_configure" = 'O'  ]]; then
+  if [[ "$ssh_configure" = 'O'  ]]; then
 
-  if [ ! -d /etc/ssh/sshd_config.d]; then
-    mkdir /etc/ssh/sshd_config.d
-    sed -i '/^Include /etc/ssh/sshd_config.d/d' /etc/ssh/sshd_config
-    cp debian.conf /etc/ssh/sshd_config.d/
+    if [ ! -d /etc/ssh/sshd_config.d]; then
+      mkdir /etc/ssh/sshd_config.d
+      sed -i '/^Include /etc/ssh/sshd_config.d/d' /etc/ssh/sshd_config
+      cp debian.conf /etc/ssh/sshd_config.d/
+    else
+     cp debian.conf /etc/ssh/sshd_config.d/
+    fi
   fi
 
-  echo ""
-
-  echo -e "${GREEN}### Configuration des fichiers /etc/ssh/sshd_config et debian.conf${NOCOLOR}"
+echo ""
+echo -e "${GREEN}### Configuration des fichiers /etc/ssh/sshd_config et debian.conf${NOCOLOR}"
   sed -i 's/^UsePAM/#UsePAM/' $sshd_conf
   sed -i 's/^X11Forwarding/#UseForwarding/' $sshd_conf
   sed -i 's/^PrintMotd/#PrintMotd/' $sshd_conf
@@ -42,7 +44,6 @@ if [[ "$ssh_configure" = 'O'  ]]; then
 
   sed -i 's/^Port/Port '"$ssh_port"'/' $debian_conf
   sed -i 's/^AllowUsers/AllowUsers '"$ssh_user"'/' $debian_conf
-fi
 
 echo ""
 read -p "Voulez-vous regenerer les cles [O/n] ? " regenerate_keys
@@ -99,5 +100,6 @@ echo -e "${GREEN}--> Redemarrage du service${NOCOLOR}"
 systemctl restart sshd.service
 
 echo ""
-echo -e "${RED}### Le Service a ete redemarre !! NE QUITTEZ PAS LA SESSION SSH ACTUELLE !!! Lancez une connexion SSH apres avoir modifier le port SSH $ssh_port dans Putty${NOCOLOR}"
-echo ""
+echo -e "${RED}### Le Service a ete redemarre !! NE QUITTEZ PAS LA SESSION SSH ACTUELLE"
+echo -e "${RED}### Ajoutez votre cle publique dans /home/$ssh_user/.ssh/authorized_keys"
+echo -e "${RED}### !!! Lancez une connexion SSH apres avoir modifier le port SSH $ssh_port dans Putty${NOCOLOR}"

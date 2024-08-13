@@ -59,15 +59,6 @@ echo -e "--> Son IP est "${RED}$ActualIP}${NOCOLOR}""
 echo -e "**********************************************"
 echo -e ""
 
-
-echo ""
-header "###         System Update                 ###"
-  read -p "Voulez-vous mettre a jour le systeme [O/n] ? " upgrade_choice
-    if [[ "$upgrade_choice" = 'O' ]]; then
-      apt update -y && apt upgrade -y
-      sleep 2
-    fi
-
 echo ""
 header "###              Configure Time            ###"
   if [ ! -f /etc/localtime.SAVE ]; then
@@ -76,6 +67,13 @@ header "###              Configure Time            ###"
   fi
   echo -e "${GREEN}L'heure systeme est ${NOCOLOR} $(date)"
 
+echo ""
+header "###         System Update                 ###"
+  read -p "Voulez-vous mettre a jour le systeme [O/n] ? " upgrade_choice
+    if [[ "$upgrade_choice" = 'O' ]]; then
+      apt update -y && apt upgrade -y
+      sleep 2
+    fi
 
 echo ""
 header "###    Usefull packets installation       ###"
@@ -122,7 +120,6 @@ read -p "Voulez-vous changer le hostname ou fullname ? [O/n] ? " hostname_conf_c
   
   else
    ActualFullHostname=$(hostname -f)
-   IpAddr=$(hostname -i)
    ActualServerName=$(hostname -s)
   fi
 
