@@ -69,6 +69,15 @@ header "###         System Update                 ###"
     fi
 
 echo ""
+header "###              Configure Time            ###"
+  if [ ! -f /etc/localtime.SAVE ]; then
+    mv /etc/localtime /etc/localtime.SAVE
+    ln -s /usr/share/zoneinfo/Europe/Paris /etc/localtime
+  fi
+  echo -e "${GREEN}L'heure systeme est ${NOCOLOR} $(date)"
+
+
+echo ""
 header "###    Usefull packets installation       ###"
   packages='unrar-free unzip hardinfo hwinfo htop tree locate git curl net-tools dirmngr ca-certificates gnupg iptables openssl wget curl sudo'
 #echo ""
@@ -82,7 +91,17 @@ echo ""
 echo -e "--> Actuellement le nom de machine est "${RED}$(hostname -s)${NOCOLOR}" et le Full Name est "${RED}$(hostname -f)${NOCOLOR}""
 read -p "Voulez-vous changer le hostname ou fullname ? [O/n] ? " hostname_conf_choice
   if [[ "$hostname_conf_choice" = O ]]; 
-  then 
+  then
+    if [[ ! -f /etc/hostname.SAVE ]]; then
+      cp /etc/hostname /etc/hostname.SAVE && echo $fqdn > /etc/hostname
+    fi
+    if [[ ! -f /etc/mailname.SAVE ]] & [[ -f /etc/mailname ]]; then
+      cp /etc/mailname /etc/mailname.SAVE && echo $dns > /etc/mailname
+    fi
+    if [[ ! -f /etc/hosts.SAVE ]]; then
+      cp /etc/hosts /etc/hosts.SAVE
+    fi
+
     read -p "Nom du serveur (ex: tatooine) : " server_name
     read -p "Nom de domaine utilise (ex: dns.net) : " dns
     read -p "DNS complet (ex: tatooine.dns.net) : " fqdn
@@ -97,23 +116,8 @@ read -p "Voulez-vous changer le hostname ou fullname ? [O/n] ? " hostname_conf_c
     export admin_email=$admin_email
     export ActualFullHostname=$(hostname -f)
 
+    hostnamectl set-hostname $fqdn
 
-      if [[ ! -f /etc/hostname.SAVE ]]; then
-        cp /etc/hostname /etc/hostname.SAVE && echo $fqdn > /etc/hostname
-      fi
-
-      if [[ ! -f /etc/mailname.SAVE ]] & [[ -f /etc/mailname ]]; then
-        cp /etc/mailname /etc/mailname.SAVE && echo $dns > /etc/mailname
-      fi
-
-      if [[ ! -f /etc/hosts.SAVE ]]; then
-        cp /etc/hosts /etc/hosts.SAVE
-      fi
-
-	sudo hostnamectl set-hostname --static $fqdn
-
-#      sed -i -e 's/'"$ActualFullHostname"'/'"$fqdn"'/' '/etc/hosts'
-#    sed -i -e 's/'"$ActualServerName"'/'"$server_name"'/' '/etc/hosts'
     hostname -F /etc/hostname
   
   else
@@ -128,14 +132,6 @@ echo ""
       cp /etc/apt/sources.list.d/pve-enterprise.list /etc/apt/sources.list.d/pve-enterprise.list.SAVE
       sed -i -e 's/pve-enterprise/pve-no-subscription/' '/etc/apt/sources.list.d/pve-enterprise.list'
     fi
-
-echo ""
-header "###              Configure Time            ###"
-  if [ ! -f /etc/localtime.SAVE ]; then
-    mv /etc/localtime /etc/localtime.SAVE 
-    ln -s /usr/share/zoneinfo/Europe/Paris /etc/localtime
-  fi
-  echo -e "${GREEN}L'heure systeme est ${NOCOLOR} $(date)"
 
 
 echo ""
@@ -213,11 +209,11 @@ read -p "Voulez-vous installer SSH Server [O/n] ? " ssh_choice
 #        cd $script_PWD/bashrc && ./install_bashrc.sh
 #  fi
 
-echo ""
-read -p "Voulez-vous installer Exim4 [O/n] ? " exim4_choice
-  if [[ "$exim4_choice" = 'O' ]]; then
-        cd $script_PWD/exim4 && ./install_exim4.sh
-  fi
+#echo ""
+#read -p "Voulez-vous installer Exim4 [O/n] ? " exim4_choice
+#  if [[ "$exim4_choice" = 'O' ]]; then
+#        cd $script_PWD/exim4 && ./install_exim4.sh
+#  fi
 
 echo ""
 read -p "Voulez-vous installer Apticron [O/n] ? " apticron_choice
@@ -232,7 +228,7 @@ read -p "Voulez-vous installer Fail2ban [O/n] ? " fail2ban_choice
   fi
 
 echo ""
-read -p "Voulez-vous installer  UFW [O/n] ? " ufw_choice
+read -p "Voulez-vous installer UFW [O/n] ? " ufw_choice
   if [[ "$ufw_choice" = 'O' ]]; then
          cd $script_PWD/firewall && ./install_firewall.sh
   fi

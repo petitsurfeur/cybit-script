@@ -10,7 +10,7 @@ echo ""
 echo -e "${GREEN}### Installation de Openssh-server${NOCOLOR}"
 
 sshd_conf=/etc/ssh/sshd_config
-ubuntu_conf=/etc/ssh/sshd_config.d/ubuntu.conf
+debian_conf=/etc/ssh/sshd_config.d/debian.conf
 
 apt install -y openssh-server
 
@@ -27,26 +27,21 @@ read -p "Voulez-vous configurer le serveur SSH [O/n] ? " ssh_configure
 if [[ "$ssh_configure" = 'O'  ]]; then
 
   if [ ! -d /etc/ssh/sshd_config.d]; then
-    mkdir /etc/ssh/sshd_coonfig.d
-    cp ubuntu.conf /etc/ssh/sshd_config.d/
+    mkdir /etc/ssh/sshd_config.d
     sed -i '/^Include /etc/ssh/sshd_config.d/d' /etc/ssh/sshd_config
-
-    cat << 'EOF' >> /etc/ssh/sshd_config
-    Include /etc/ssh/sshd_config.d/*.conf
-EOF
+    cp debian.conf /etc/ssh/sshd_config.d/
   fi
 
-  cp ubuntu.conf /etc/ssh/sshd_config.d/
   echo ""
 
-  echo -e "${GREEN}### Configuration des fichiers /etc/ssh/sshd_config et ubuntu.conf${NOCOLOR}"
+  echo -e "${GREEN}### Configuration des fichiers /etc/ssh/sshd_config et debian.conf${NOCOLOR}"
   sed -i 's/^UsePAM/#UsePAM/' $sshd_conf
   sed -i 's/^X11Forwarding/#UseForwarding/' $sshd_conf
   sed -i 's/^PrintMotd/#PrintMotd/' $sshd_conf
   sed -i 's/^PasswordAuthentication/#PasswordAuthentication/' $sshd_conf
 
-  sed -i 's/^Port/Port '"$ssh_port"'/' $ubuntu_conf
-  sed -i 's/^AllowUsers/AllowUsers '"$ssh_user"'/' $ubuntu_conf
+  sed -i 's/^Port/Port '"$ssh_port"'/' $debian_conf
+  sed -i 's/^AllowUsers/AllowUsers '"$ssh_user"'/' $debian_conf
 fi
 
 echo ""
@@ -85,17 +80,17 @@ if [[ "$secure_ssh" = 'O' ]]; then
 
   fi
 
-  sed -i 's/#AuthenticationMethods publickey/AuthenticationMethods publickey/' $ubuntu_conf
-  sed -i 's/#PubkeyAuthentication yes/PubkeyAuthentication yes/' $ubuntu_conf
-  sed -i 's/PasswordAuthentication yes/PasswordAuthentication no/' $ubuntu_conf
-  sed -i 's/UsePAM yes/UsePAM no/' $ubuntu_conf
+  sed -i 's/#AuthenticationMethods publickey/AuthenticationMethods publickey/' $debian_conf
+  sed -i 's/#PubkeyAuthentication yes/PubkeyAuthentication yes/' $debian_conf
+  sed -i 's/PasswordAuthentication yes/PasswordAuthentication no/' $debian_conf
+  sed -i 's/UsePAM yes/UsePAM no/' $debian_conf
 
   ### Securisation du fichier moduli et restriction des ciphers, cles d'echange et codes d'authentification
   if [ ! -f /etc/ssh/moduli.ORIGINAL ]; then
     cp /etc/ssh/moduli /etc/ssh/moduli.ORIGINAL
   fi
   sudo awk '$5 >= 3071' /etc/ssh/moduli
-  echo -e "\nKexAlgorithms curve25519-sha256@libssh.org,diffie-hellman-group16-sha512,diffie-hellman-group18-sha512\nCiphers chacha20-poly1305@openssh.com,aes256-gcm@openssh.com,aes128-gcm@openssh.com,aes256-ctr,aes192-ctr,aes128-ctr\nMACs hmac-sha2-512-etm@openssh.com,hmac-sha2-256-etm@openssh.com,umac-128-etm@openssh.com\nHostKeyAlgorithms ssh-ed25519,ssh-ed25519-cert-v01@openssh.com,sk-ssh-ed25519@openssh.com,sk-ssh-ed25519-cert-v01@openssh.com" >> /etc/ssh/sshd_config.d/ubuntu.conf
+  echo -e "\nKexAlgorithms curve25519-sha256@libssh.org,diffie-hellman-group16-sha512,diffie-hellman-group18-sha512\nCiphers chacha20-poly1305@openssh.com,aes256-gcm@openssh.com,aes128-gcm@openssh.com,aes256-ctr,aes192-ctr,aes128-ctr\nMACs hmac-sha2-512-etm@openssh.com,hmac-sha2-256-etm@openssh.com,umac-128-etm@openssh.com\nHostKeyAlgorithms ssh-ed25519,ssh-ed25519-cert-v01@openssh.com,sk-ssh-ed25519@openssh.com,sk-ssh-ed25519-cert-v01@openssh.com" >> /etc/ssh/sshd_config.d/debian.conf
 
 fi
 

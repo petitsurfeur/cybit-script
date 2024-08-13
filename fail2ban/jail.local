@@ -1,3 +1,10 @@
+
+[INCLUDES]
+
+#before = paths-distro.conf
+before = paths-debian.conf
+
+
 [DEFAULT]
 # Separer les IP par des espaces
 ignoreip = 127.0.0.1/8 xxx.xx
@@ -6,7 +13,7 @@ ignoreip = 127.0.0.1/8 xxx.xx
 bantime = 1029600 ; 2 semaines
 
 # A host is banned if it has generated "maxretry" during the last "findtime"
-findtime = 86400  ; 1 jour
+findtime = 172800  ; 2 jours
 maxretry = 3
 
 destemail = admin@xxx.xx 
@@ -22,13 +29,16 @@ banaction = %(banaction_allports)s
 bantime  = 604800  ; 1 week
 findtime = 86400   ; 1 day
 
+
+#
+# JAILS
+#
+
 ###  SSH Servers ###
 [sshd]
 enabled  = true
 port     = ssh,2022
 filter   = sshd
-#maxretry = 3
-#logpath = /var/log/auth.log
 logpath = %(sshd_log)s
 backend = %(sshd_backend)s
 
