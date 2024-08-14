@@ -67,6 +67,22 @@ header "###              Configure Time            ###"
   fi
   echo -e "${GREEN}L'heure systeme est ${NOCOLOR} $(date)"
 
+
+echo ""
+  read -p "Voulez-vous ajouter/parametrer un utilisateur [O/n] ? " user_choice
+    if [[ "$user_choice" = 'O' ]]; then
+      read -p "Quel est le nom d'utilisateur (ex: admin) : "  user_add
+      export user_add=$user_add
+      if [ ! -d /home/$user_add/ ]; then
+          adduser $user_add
+          usermod -a -G adm,sudo,www-data $user_add
+      echo -e "${GREEN}L'utilisateur $user_add a ete cree et ajoute aux groupes adm, sudo et www-data${NOCOLOR}"
+      else echo -e "${GREEN}L'utilisateur $user_add existe deja et il a ete ajoute aux groupes adm, sudo et www-data${NOCOLOR}"
+      usermod -a -G adm,sudo,www-data $user_add
+      fi
+    fi
+
+
 echo ""
 header "###         System Update                 ###"
   read -p "Voulez-vous mettre a jour le systeme [O/n] ? " upgrade_choice
@@ -104,7 +120,7 @@ read -p "Voulez-vous changer le hostname ou fullname ? [O/n] ? " hostname_conf_c
     read -p "Nom de domaine utilise (ex: dns.net) : " dns
     read -p "DNS complet (ex: tatooine.dns.net) : " fqdn
 
-    read -p "Email du serveur (srv-xx@xx.net) : " server_email
+    read -p "Email du serveur (server@xx.net) : " server_email
     read -p "Email du destinataire (admin@xxx.xx) : " admin_email
 
     export server_name=$server_name
@@ -138,23 +154,9 @@ echo ""
     fi
 
 echo ""
-  read -p "Voulez-vous installer rsyslog [O/n] ?" install_rsyslog
+  read -p "Voulez-vous installer rsyslog [O/n] ? " install_rsyslog
     if [[ "$install_rsyslog" = 'O' ]]; then
       apt install -y rsyslog
-    fi
-
-echo ""    
-  read -p "Voulez-vous ajouter/parametrer un utilisateur [O/n] ? " user_choice
-    if [[ "$user_choice" = 'O' ]]; then
-      read -p "Quel est le nom d'utilisateur (ex: admin) : "  user_add
-      export user_add=$user_add
-      if [ ! -d /home/$user_add/ ]; then
-          adduser $user_add
-          usermod -a -G adm,sudo,www-data $user_add
-      echo -e "${GREEN}L'utilisateur $user_add a ete cree et ajoute aux groupes adm, sudo et www-data${NOCOLOR}"
-      else echo -e "${GREEN}L'utilisateur $user_add existe deja et il a ete ajoute aux groupes adm, sudo et www-data${NOCOLOR}"
-      usermod -a -G adm,sudo,www-data $user_add
-      fi
     fi
 
 
@@ -235,11 +237,11 @@ read -p "Voulez-vous installer UFW [O/n] ? " ufw_choice
          cd $script_PWD/firewall && ./install_firewall.sh
   fi
 
-echo ""
-read -p "Voulez-vous installer OpenVPN [O/n] ? " openvpn_choice
-  if [[ "$openvpn_choice" = 'O' ]]; then
-         cd $script_PWD/openvpn && ./install_openvpn_server.sh
-  fi
+#echo ""
+#read -p "Voulez-vous installer OpenVPN [O/n] ? " openvpn_choice
+#  if [[ "$openvpn_choice" = 'O' ]]; then
+#         cd $script_PWD/openvpn && ./install_openvpn_server.sh
+#  fi
 
 
 echo ""
