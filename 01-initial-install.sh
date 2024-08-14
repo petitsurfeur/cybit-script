@@ -54,7 +54,7 @@ ActualIP=$(ip a | grep brd | grep inet)
 
 echo -e ""
 echo -e "**********************************************"
-echo -e "--> Actuellement le nom de machine est "${RED}$(hostname -s)${NOCOLOR}""
+echo -e "--> Actuellement le nom de machine est "${RED}$(hostname -f)${NOCOLOR}""
 echo -e "--> Son IP est "${RED}$ActualIP}${NOCOLOR}""
 echo -e "**********************************************"
 echo -e ""
@@ -132,11 +132,16 @@ echo ""
 
 
 echo ""
-  read -p "Voulez-vous planifier la mise a jour quotidienne du Systeme ? (Copie du script System_Update dans /root) [O/n] " update_install_script
+  read -p "Voulez-vous planifier la mise a jour quotidienne du Systeme ? (Copie du script System_Update dans /root) [O/n] ?" update_install_script
     if [[ "$update_install_script" = 'O' ]]; then
       cd $script_PWD/update/ && ./install_update.sh
     fi
 
+echo ""
+  read -p "Voulez-vous installer rsyslog [O/n] ?" install_rsyslog
+    if [[ "$install_rsyslog" = 'O' ]]; then
+      apt install -y rsyslog
+    fi
 
 echo ""    
   read -p "Voulez-vous ajouter/parametrer un utilisateur [O/n] ? " user_choice

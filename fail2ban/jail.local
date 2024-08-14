@@ -23,6 +23,12 @@ sendername = Fail2Ban
 # Pour recevoir les logs avec le mail
 action = %(action_mwl)s
 
+
+# "backend" specifies the backend used to get files modification.
+# Available options are "pyinotify", "gamin", "polling", "systemd" and "auto".
+backend = systemd
+
+
 [recidive]
 logpath  = /var/log/fail2ban.log
 banaction = %(banaction_allports)s

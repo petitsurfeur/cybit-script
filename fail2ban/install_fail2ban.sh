@@ -6,7 +6,7 @@ NOCOLOR="\033[0m"
 
 set -e
 
-read -p "Email de l'expediteur : " sender_email
+read -p "Email de l'expediteur (server@xx.xx): " sender_email
 read -p "Email du destinataire (admin@xx.xx) : " dest_email
 read -p "Machines a Whitelister (separer les IP par des espaces) : " whitelist
 
@@ -29,7 +29,7 @@ echo ""
 echo -e "${GREEN}### Configuration du fichier jail.local${NOCOLOR}"
 cp jail.local /etc/fail2ban/
 
-sed -i -e 's/^#*ignoreip.*/ignoreip = 127.0.0.1\/8 '"$whitelist"' /' '/etc/fail2ban/jail.local'
+sed -i -e 's/^#*ignoreip.*/ignoreip = 127.0.0.1\/8 10.8.0.0\/24 192.168.50.0\/24 192.168.51.0\/24 '"$whitelist"' /' '/etc/fail2ban/jail.local'
 sed -i -e 's/^#*maxretry =.*/maxretry = 3/' '/etc/fail2ban/jail.local'
 sed -i -e 's/^#*destemail =.*/destemail = '"$admin_email"' /' '/etc/fail2ban/jail.local'
 sed -i -e 's/^#*sendername =.*/sendername = Fail2Ban - '"$(hostname -s)"' /' '/etc/fail2ban/jail.local'
@@ -46,4 +46,4 @@ sleep 5
 fail2ban-client status
 
 echo ""
-echo -e "${RED}### Penser a parametrer /etc/fail2ban/jail.conf et supprimer les regles inutiles${NOCOLOR}"
+echo -e "${RED}### Penser a parametrer /etc/fail2ban/jail.local et supprimer les regles inutiles${NOCOLOR}"
