@@ -115,7 +115,7 @@ source $ZSH/oh-my-zsh.sh
 
 alias ls='ls --color=auto'
 alias ll='ls -alFh'
-alias dc='docker-compose'
+alias dc='docker compose'
 
 #LS_COLORS='di=34;40:ln=35;40:so=32;40:pi=33;40:ex=31;40:bd=34;46:cd=34;43:su=0;41:sg=0;46:tw=0;42:ow=0;43:'
 LS_COLORS='di=1;104:fi=0:ln=31:pi=5:so=5:bd=5:cd=5:or=31:mi=0:ex=35:*.rpm=90'
