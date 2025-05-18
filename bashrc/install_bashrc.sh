@@ -17,5 +17,17 @@ fi
 EOF
 
 echo ""
+echo -e "${GREEN}### Installation du MOTD${NOCOLOR}"
+apt install screenfetch inxi -y
+if [ -f /etc/update-motd.d/10-custom ]; then
+  cp /etc/update-motd.d/10-custom /etc/update-motd.d/10-custom.SAVE
+fi
+cp 10-custom /etc/update-motd.d/
+cp 00-header /etc/update-motd.d/
+chmod +x /etc/update-motd.d/00-header /etc/update-motd.d/10-custom
+
+
+
+echo ""
 #read -p "Nom du serveur (ex: tatooine) : " server_name
-echo -e "${RED}### Pour personnaliser le message d'accueil dans /etc/motd > http://patorjk.com/software/taag/#p=display&f=ANSI%20Shadow&t="${server_name}" ${NOCOLOR}"
+echo -e "${RED}### Pour personnaliser le message d'accueil dans /etc/update-motd > http://patorjk.com/software/taag/#p=display&f=ANSI%20Shadow&t="${server_name}" ${NOCOLOR}"
