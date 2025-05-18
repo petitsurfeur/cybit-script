@@ -1,0 +1,29 @@
+#!/bin/sh
+#
+#    00-header - create the header of the MOTD
+#    Copyright (C) 2009-2010 Canonical Ltd.
+#
+
+RED="\033[1;31m"
+GREEN="\033[1;32m"
+NOCOLOR="\033[0m"
+
+
+[ -r /etc/lsb-release ] && . /etc/lsb-release
+
+if [ -z "$DISTRIB_DESCRIPTION" ] && [ -x /usr/bin/lsb_release ]; then
+        # Fall back to using the very slow lsb_release utility
+        DISTRIB_DESCRIPTION=$(lsb_release -s -d)
+fi
+
+echo "${RED}";
+echo "███╗   ██╗███████╗██╗    ██╗    ███████╗██████╗ ██╗   ██╗";
+echo "████╗  ██║██╔════╝██║    ██║    ██╔════╝██╔══██╗██║   ██║";
+echo "██╔██╗ ██║█████╗  ██║ █╗ ██║    ███████╗██████╔╝██║   ██║";
+echo "██║╚██╗██║██╔══╝  ██║███╗██║    ╚════██║██╔══██╗╚██╗ ██╔╝";
+echo "██║ ╚████║███████╗╚███╔███╔╝    ███████║██║  ██║ ╚████╔╝ ";
+echo "╚═╝  ╚═══╝╚══════╝ ╚══╝╚══╝     ╚══════╝╚═╝  ╚═╝  ╚═══╝  ";
+echo "${NOCOLOR}"
+
+#printf "Welcome to %s (%s %s %s)\n" "$DISTRIB_DESCRIPTION" "$(uname -o)" "$(uname -r)" "$(uname -m)"
+

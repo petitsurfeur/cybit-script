@@ -34,17 +34,17 @@ fi
 
 
 
-echo ""
-echo -e "${GREEN}### Mise en place des DNS OPENDNS dans resolv.conf${NOCOLOR}"
-if [ ! -f /etc/resolv.conf.SAVE ]; then
- cp /etc/resolv.conf /etc/resolv.conf.SAVE
-fi
+#echo ""
+#echo -e "${GREEN}### Mise en place des DNS OPENDNS dans resolv.conf${NOCOLOR}"
+#if [ ! -f /etc/resolv.conf.SAVE ]; then
+# cp /etc/resolv.conf /etc/resolv.conf.SAVE
+#fi
 
-sed -i '/^nameserver/d' /etc/resolv.conf
+#sed -i '/^nameserver/d' /etc/resolv.conf
 
-cat << 'EOF' >> /etc/resolv.conf
-nameserver 127.0.0.1
-nameserver 9.9.9.9
-nameserver 9.9.9.11
-EOF
+#cat << 'EOF' >> /etc/resolv.conf
+#nameserver 127.0.0.1
+#nameserver 9.9.9.9
+#nameserver 9.9.9.11
+#EOF
 
