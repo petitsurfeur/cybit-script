@@ -123,8 +123,9 @@ export LS_COLORS
 #
 #. /usr/share/powerline/bindings/zsh/powerline.zsh
 
-bindkey  "^[[1~"   beginning-of-line
-bindkey  "^[[4~"   end-of-line
+# Pour faire fonctionner les touches Home et End
+bindkey "^[[H" beginning-of-line
+bindkey "^[[F" end-of-line
 
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
