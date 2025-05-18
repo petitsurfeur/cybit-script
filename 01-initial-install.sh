@@ -47,7 +47,7 @@ fi
 #header "###      Variables Definitions            ###"
   export script_PWD=$PWD
 
-clear
+#clear
 # Ajouter infos actuels dans banner
 
 ActualIP=$(ip a | grep brd | grep inet)
@@ -93,7 +93,7 @@ header "###         System Update                 ###"
 
 echo ""
 header "###    Usefull packets installation       ###"
-  packages='unrar-free unzip hardinfo hwinfo htop tree locate git curl net-tools dirmngr ca-certificates gnupg iptables openssl wget curl sudo'
+  packages='unrar-free unzip hardinfo hwinfo htop tree locate git curl net-tools dirmngr ca-certificates gnupg iptables openssl wget curl sudo lshw'
 #echo ""
 read -p "Voulez-vous installer les paquets suivants (utiles) : $packages  [O/n] ? " packages_choice
     if [[ "$packages_choice" = 'O' ]]; then
